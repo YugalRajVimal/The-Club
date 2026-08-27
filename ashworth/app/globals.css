@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FDFCF9;
+  color: #262421;
+}
+
+@layer utilities {
+  .hairline {
+    border-color: #C6A85C;
+  }
+
+  .hairline-thin {
+    border-width: 1px;
+  }
+
+  .eyebrow {
+    @apply font-sans text-[11px] tracking-widest2 uppercase text-gold-dark;
+  }
+
+  .section-heading {
+    @apply font-serif text-4xl md:text-5xl text-ink;
+  }
+
+  .diamond {
+    width: 6px;
+    height: 6px;
+    background: #A6812F;
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 1.5px solid #A6812F;
+  outline-offset: 3px;
+}

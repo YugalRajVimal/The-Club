@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/admin/forgot-password/page": "app/admin/forgot-password/page.js",
+  "/admin/(protected)/clubs/page": "app/admin/(protected)/clubs/page.js",
+  "/admin/(protected)/payments/page": "app/admin/(protected)/payments/page.js",
+  "/admin/(protected)/roles/page": "app/admin/(protected)/roles/page.js",
+  "/admin/(protected)/users/page": "app/admin/(protected)/users/page.js",
+  "/admin/(protected)/users/[id]/page": "app/admin/(protected)/users/[id]/page.js",
+  "/admin/(protected)/dashboard/page": "app/admin/(protected)/dashboard/page.js",
+  "/admin/(protected)/settings/page": "app/admin/(protected)/settings/page.js",
+  "/admin/(protected)/subadmins/page": "app/admin/(protected)/subadmins/page.js"
+}

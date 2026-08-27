@@ -1,0 +1,1030 @@
+{
+  "info": {
+    "name": "Ashworth Club - Epic 1 (Signup/Auth/Clubs)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "signupSessionId",
+      "value": ""
+    },
+    {
+      "key": "clubId",
+      "value": ""
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "cfOrderId",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "subAdminToken",
+      "value": ""
+    },
+    {
+      "key": "targetUserId",
+      "value": ""
+    },
+    {
+      "key": "targetDocId",
+      "value": ""
+    },
+    {
+      "key": "roleId",
+      "value": ""
+    },
+    {
+      "key": "subAdminId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Clubs",
+      "item": [
+        {
+          "name": "List Clubs",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clubs"
+          }
+        },
+        {
+          "name": "Get Club by Slug",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clubs/club-one"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Signup Flow",
+      "item": [
+        {
+          "name": "1. Signup Start",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/signup/start",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clubId\": \"{{clubId}}\",\n  \"fullName\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"9999999999\",\n  \"dob\": \"1995-01-01\",\n  \"address\": \"123 Main St\",\n  \"occupation\": \"Designer\",\n  \"password\": \"SuperSecret123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "2. Signup Consent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/signup/consent",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"signupSessionId\": \"{{signupSessionId}}\",\n  \"consentAccepted\": true,\n  \"consentVersion\": \"v1\",\n  \"signedName\": \"Jane Doe\"\n}"
+            }
+          }
+        },
+        {
+          "name": "3. Signup OTP Send",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/signup/otp/send",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"signupSessionId\": \"{{signupSessionId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "4. Signup OTP Verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/signup/otp/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"signupSessionId\": \"{{signupSessionId}}\",\n  \"otp\": \"123456\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login / Session",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane@example.com\",\n  \"password\": \"SuperSecret123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login with Google",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/login/google",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"googleIdToken\": \"<google-id-token>\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Forgot Password - Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/forgot-password/otp/send",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Forgot Password - Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/forgot-password/otp/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane@example.com\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"AnotherSecret123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Check Auth",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/check-auth"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments (Cashfree)",
+      "item": [
+        {
+          "name": "Create Payment Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/membership/payment/create-order"
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/membership/payment/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cfOrderId\": \"{{cfOrderId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/membership/receipt"
+          }
+        },
+        {
+          "name": "Download Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/membership/receipt/download"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Documents & KYC",
+      "item": [
+        {
+          "name": "Required List",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user/documents/required-list"
+          }
+        },
+        {
+          "name": "Upload Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/user/documents/upload",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "documentType",
+                  "value": "aadhar_front",
+                  "type": "text"
+                },
+                {
+                  "key": "aadharNumber",
+                  "value": "123412341234",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Save KYC Numbers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/user/documents/kyc-numbers",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aadharNumber\": \"123412341234\",\n  \"panNumber\": \"ABCDE1234F\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Documents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/user/documents"
+          }
+        },
+        {
+          "name": "Submit Documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/user/documents/submit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/user/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/user/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\",\n  \"address\": \"456 New Address\",\n  \"occupation\": \"Product Manager\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Auth",
+      "item": [
+        {
+          "name": "Admin Login (super admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/admin/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@ashworthclub.test\",\n  \"password\": \"ChangeMeNow123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Login (seeded sub-admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/admin/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"subadmin@ashworthclub.test\",\n  \"password\": \"ChangeMeNow123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Check Auth",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/admin/check-auth"
+          }
+        },
+        {
+          "name": "Admin Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/admin/logout"
+          }
+        },
+        {
+          "name": "Admin Forgot Password - Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/admin/forgot-password/otp/send",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@ashworthclub.test\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Forgot Password - Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/admin/forgot-password/otp/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@ashworthclub.test\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"AnotherSecret123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Users Management",
+      "item": [
+        {
+          "name": "List Users (super admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users?status=pending_approval"
+          }
+        },
+        {
+          "name": "List Users (sub-admin - should 200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{subAdminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users"
+          }
+        },
+        {
+          "name": "Get User By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}"
+          }
+        },
+        {
+          "name": "Create User (manual add)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clubId\": \"{{clubId}}\",\n  \"fullName\": \"Manual Add User\",\n  \"email\": \"manual@example.com\",\n  \"phone\": \"9998887777\",\n  \"dob\": \"1990-05-05\",\n  \"address\": \"789 Side St\",\n  \"occupation\": \"Consultant\",\n  \"password\": \"SuperSecret123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"occupation\": \"Updated Occupation\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete User (sub-admin - should 403)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{subAdminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}"
+          }
+        },
+        {
+          "name": "Delete User (super admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}"
+          }
+        },
+        {
+          "name": "Verify User Document",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}/documents/{{targetDocId}}/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"verified\": true,\n  \"note\": \"Looks good\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Approve/Reject Membership",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}/membership/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approve\": true,\n  \"note\": \"All documents verified\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get User Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{targetUserId}}/payments"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Clubs Management",
+      "item": [
+        {
+          "name": "List Clubs (admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/clubs"
+          }
+        },
+        {
+          "name": "Create Club (JSON, no image)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/clubs",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"club-five\",\n  \"name\": \"Club Five\",\n  \"tagline\": \"New club\",\n  \"membershipFee\": { \"amount\": 15000, \"currency\": \"INR\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Club Fee",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/clubs/{{clubId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"membershipFee\": { \"amount\": 27500 }\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Club",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/clubs/{{clubId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Payments Overview",
+      "item": [
+        {
+          "name": "List Payments Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/payments"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Roles & Sub-Admins (super admin only)",
+      "item": [
+        {
+          "name": "List Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/roles"
+          }
+        },
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/roles",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Documents Reviewer\",\n  \"permissions\": {\n    \"users\": { \"view\": true, \"add\": false, \"update\": false, \"delete\": false, \"verifyDocuments\": true, \"approveMembership\": false },\n    \"clubs\": { \"view\": false, \"add\": false, \"update\": false, \"delete\": false },\n    \"payments\": { \"view\": false },\n    \"settings\": { \"view\": false, \"update\": false }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/roles/{{roleId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": { \"users\": { \"approveMembership\": true } }\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/roles/{{roleId}}"
+          }
+        },
+        {
+          "name": "List Sub-Admins",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/subadmins"
+          }
+        },
+        {
+          "name": "Create Sub-Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/subadmins",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Sub Admin\",\n  \"email\": \"newsubadmin@example.com\",\n  \"password\": \"SuperSecret123\",\n  \"roleId\": \"{{roleId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Sub-Admin",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/subadmins/{{subAdminId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Renamed Sub Admin\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Sub-Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/subadmins/{{subAdminId}}"
+          }
+        },
+        {
+          "name": "Create Role (sub-admin token - should 403)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{subAdminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/roles",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Should Fail\",\n  \"permissions\": {\n    \"users\": { \"view\": true, \"add\": false, \"update\": false, \"delete\": false, \"verifyDocuments\": false, \"approveMembership\": false },\n    \"clubs\": { \"view\": false, \"add\": false, \"update\": false, \"delete\": false },\n    \"payments\": { \"view\": false },\n    \"settings\": { \"view\": false, \"update\": false }\n  }\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Settings",
+      "item": [
+        {
+          "name": "Get Upload Provider",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/settings"
+          }
+        },
+        {
+          "name": "Update Upload Provider",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/settings/upload-provider",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uploadProvider\": \"cloudinary\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cross-Auth Checks (should fail)",
+      "item": [
+        {
+          "name": "User token on admin route (expect 401)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users"
+          }
+        },
+        {
+          "name": "Admin token on user route (expect 401)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/user/check-auth"
+          }
+        }
+      ]
+    }
+  ]
+}
