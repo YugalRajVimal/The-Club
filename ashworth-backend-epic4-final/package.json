@@ -2,10 +2,10 @@
   "name": "ashworth-club-backend",
   "version": "1.0.0",
   "description": "Ashworth Club Membership System - Backend (Epics 1-4: full contract implementation)",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "seed": "ts-node-dev --transpile-only scripts/seed.ts",
     "seed:admin": "ts-node-dev --transpile-only scripts/seedAdmin.ts",
