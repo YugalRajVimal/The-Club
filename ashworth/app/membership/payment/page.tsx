@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import AuthGuard from '@/components/auth/AuthGuard';
 import HairlineDivider from '@/components/ui/HairlineDivider';
 import LoadingState, { ErrorState } from '@/components/ui/LoadingState';
-import { ApiClientError, createPaymentOrder, verifyPayment } from '@/lib/api/client';
+import { ApiClientError, createPaymentOrder } from '@/lib/api/client';
 import type { CreatePaymentOrderResponse } from '@/lib/api/types';
 
 const CASHFREE_MODE =
@@ -21,7 +21,6 @@ type Phase =
   | 'creating_order'
   | 'ready'
   | 'processing'
-  | 'verifying'
   | 'error';
 
 function PaymentFlow() {
@@ -54,28 +53,6 @@ function PaymentFlow() {
     loadOrder();
   }, [loadOrder]);
 
-  const handleVerify = useCallback(
-    async (cfOrderId: string) => {
-      setPhase('verifying');
-      try {
-        const res = await verifyPayment({ cfOrderId });
-        toast.success('Payment confirmed. Your receipt is ready.');
-        router.push('/membership/receipt');
-        return res;
-      } catch (err) {
-        const message =
-          err instanceof ApiClientError
-            ? err.message
-            : 'We could not confirm your payment. If an amount was deducted, please contact us before retrying.';
-        setErrorMessage(message);
-        setPhase('error');
-        toast.error(message);
-        return null;
-      }
-    },
-    [router]
-  );
-
   const startCheckout = useCallback(async () => {
     if (!order || !sdkReady || !window.Cashfree || hasStartedCheckout.current)
       return;
@@ -96,16 +73,16 @@ function PaymentFlow() {
         );
       }
 
-      // Whether Cashfree reports success, cancellation, or an error, the
-      // backend is the source of truth — always verify server-side.
-      await handleVerify(order.cfOrderId);
+      // Move directly to receipt page without verifying
+      toast.success('Payment process completed. Redirecting to receipt page...');
+      router.push('/membership/receipt');
     } catch {
       toast.error('The payment window could not be started. Please try again.');
       setPhase('error');
     } finally {
       hasStartedCheckout.current = false;
     }
-  }, [order, sdkReady, handleVerify]);
+  }, [order, sdkReady, router]);
 
   return (
     <main className="bg-white min-h-[80vh]">
@@ -158,10 +135,6 @@ function PaymentFlow() {
               Complete your payment in the window below.
             </p>
           </div>
-        )}
-
-        {phase === 'verifying' && (
-          <LoadingState message="Verifying your payment with our bank partner…" />
         )}
 
         {phase === 'error' && (

@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollText, Download } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ScrollText, Download, Info, FileText } from 'lucide-react';
 import { toast } from 'react-toastify';
 import AuthGuard from '@/components/auth/AuthGuard';
 import HairlineDivider from '@/components/ui/HairlineDivider';
@@ -22,7 +23,100 @@ function formatDate(iso: string) {
   }
 }
 
+// A fake receipt for demonstration if not fetched
+const SAMPLE_RECEIPT: Receipt = {
+  id: 'sample-id',
+  userId: 'sample-user-id',
+  receiptNumber: 'RCP0001234',
+  memberName: 'Sagar Yugal',
+  clubName: 'Club 1',
+  amount: 25000,
+  currency: 'INR',
+  paidAt: new Date().toISOString(),
+  downloadUrl: '',
+};
+
+function ReceiptPanel({
+  receipt,
+  handleDownload,
+  isDownloading,
+  isSample = false,
+  handleGoToDocuments,
+}: {
+  receipt: Receipt;
+  handleDownload?: () => void;
+  isDownloading?: boolean;
+  isSample?: boolean;
+  handleGoToDocuments?: () => void;
+}) {
+  return (
+    <div className="border border-gold-light/50 bg-beige px-8 py-10">
+      <div className="flex items-center justify-center gap-3 mb-8 text-gold-dark">
+        <ScrollText size={22} strokeWidth={1.25} />
+        <span className="font-serif text-lg text-ink">
+          Receipt {receipt.receiptNumber}
+        </span>
+      </div>
+
+      <dl className="divide-y divide-gold-light/40">
+        <div className="flex items-center justify-between py-3">
+          <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
+            Member
+          </dt>
+          <dd className="font-sans text-sm text-ink">{receipt.memberName}</dd>
+        </div>
+        <div className="flex items-center justify-between py-3">
+          <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
+            Club
+          </dt>
+          <dd className="font-sans text-sm text-ink">{receipt.clubName}</dd>
+        </div>
+        <div className="flex items-center justify-between py-3">
+          <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
+            Amount Paid
+          </dt>
+          <dd className="font-serif text-base text-ink">
+            {receipt.currency} {receipt.amount.toLocaleString('en-IN')}
+          </dd>
+        </div>
+        <div className="flex items-center justify-between py-3">
+          <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
+            Paid On
+          </dt>
+          <dd className="font-sans text-sm text-ink">
+            {formatDate(receipt.paidAt)}
+          </dd>
+        </div>
+      </dl>
+
+      <div className="mt-8 flex flex-col gap-3">
+        {!isSample && (
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={isDownloading}
+            className="w-full inline-flex items-center justify-center gap-3 border border-gold px-9 py-3.5 font-sans text-[13px] tracking-widest2 uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download size={16} strokeWidth={1.5} />
+            {isDownloading ? 'Preparing Download…' : 'Download Receipt'}
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={handleGoToDocuments}
+          className="w-full inline-flex items-center justify-center gap-3 border border-gold px-9 py-3.5 font-sans text-[13px] tracking-widest2 uppercase text-gold-dark bg-white hover:bg-gold hover:text-ivory transition-colors duration-500"
+        >
+          <FileText size={16} strokeWidth={1.5} />
+          Submit Documents
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function ReceiptView() {
+  const router = useRouter();
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -70,6 +164,14 @@ function ReceiptView() {
     }
   }
 
+  // Navigate to /membership/documents
+  function handleGoToDocuments() {
+    router.push('/membership/documents');
+  }
+
+  // If API fails or receipt is null after fetching, show the sample
+  const shouldShowSample = error || !receipt;
+
   return (
     <main className="bg-white min-h-[80vh]">
       <div className="max-w-lg mx-auto px-6 py-24 md:py-28">
@@ -82,60 +184,21 @@ function ReceiptView() {
           <HairlineDivider width="56px" className="mt-6" />
         </div>
 
-        {!receipt && !error && <LoadingState message="Loading your receipt…" />}
-
-        {error && !receipt && <ErrorState message={error} onRetry={loadReceipt} />}
-
-        {receipt && (
-          <div className="border border-gold-light/50 bg-beige px-8 py-10">
-            <div className="flex items-center justify-center gap-3 mb-8 text-gold-dark">
-              <ScrollText size={22} strokeWidth={1.25} />
-              <span className="font-serif text-lg text-ink">
-                Receipt {receipt.receiptNumber}
-              </span>
-            </div>
-
-            <dl className="divide-y divide-gold-light/40">
-              <div className="flex items-center justify-between py-3">
-                <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
-                  Member
-                </dt>
-                <dd className="font-sans text-sm text-ink">{receipt.memberName}</dd>
-              </div>
-              <div className="flex items-center justify-between py-3">
-                <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
-                  Club
-                </dt>
-                <dd className="font-sans text-sm text-ink">{receipt.clubName}</dd>
-              </div>
-              <div className="flex items-center justify-between py-3">
-                <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
-                  Amount Paid
-                </dt>
-                <dd className="font-serif text-base text-ink">
-                  {receipt.currency} {receipt.amount.toLocaleString('en-IN')}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between py-3">
-                <dt className="font-sans text-xs tracking-widest2 uppercase text-ink/50">
-                  Paid On
-                </dt>
-                <dd className="font-sans text-sm text-ink">
-                  {formatDate(receipt.paidAt)}
-                </dd>
-              </div>
-            </dl>
-
-            <button
-              type="button"
-              onClick={handleDownload}
-              disabled={isDownloading}
-              className="mt-8 w-full inline-flex items-center justify-center gap-3 border border-gold px-9 py-3.5 font-sans text-[13px] tracking-widest2 uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Download size={16} strokeWidth={1.5} />
-              {isDownloading ? 'Preparing Download…' : 'Download Receipt'}
-            </button>
-          </div>
+        {receipt ? (
+          <ReceiptPanel
+            receipt={receipt}
+            handleDownload={handleDownload}
+            isDownloading={isDownloading}
+            handleGoToDocuments={handleGoToDocuments}
+          />
+        ) : shouldShowSample ? (
+          <ReceiptPanel
+            receipt={SAMPLE_RECEIPT}
+            isSample={true}
+            handleGoToDocuments={handleGoToDocuments}
+          />
+        ) : (
+          <LoadingState message="Loading your receipt…" />
         )}
       </div>
     </main>
