@@ -27,12 +27,12 @@ export default function AboutClub() {
         <SectionHeading eyebrow="Est. &middot; By Charter" title="About the Club" />
 
         <Reveal scale={0.98}>
-          <div className="border border-gold-light/50 bg-ivory px-6 py-4 md:px-10">
-            <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gold-light/40">
+          <div className=" px-6 py-4 md:px-10">
+            <div className="flex flex-col gap-6 md:flex-row">
               {blocks.map((block) => (
                 <div
                   key={block.label}
-                  className="flex-1 py-10 md:py-12 px-2 md:px-8 text-center flex flex-col items-center"
+                  className="border border-gold-light/50 bg-ivory flex-1 py-10 md:py-12 px-2 md:px-8 text-center flex flex-col items-center"
                 >
                   <span className="eyebrow mb-4">{block.label}</span>
                   <p className="text-sm leading-relaxed text-ink/70 font-sans max-w-[220px]">

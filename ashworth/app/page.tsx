@@ -13,7 +13,7 @@ export default function Home() {
       <Hero />
       <ClubCards />
       <AboutClub />
-      <PathToMembership />
+      {/* <PathToMembership /> */}
       <Collaborations />
       <EventsEntertainment />
       <Marketplace />

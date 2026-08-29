@@ -54,15 +54,15 @@ export default function ClubCards() {
         )}
 
         {!error && !clubs && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gold-light/25 border border-gold-light/25">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 bg-gold-light/25 border border-gold-light/25 p-8">
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-ivory h-full px-8 py-12 flex flex-col items-center gap-5 animate-pulse"
+                className="bg-ivory h-full px-8 py-12 flex flex-col items-center gap-5 animate-pulse rounded-xl shadow-sm"
               >
                 <span className="w-16 h-16 rounded-full bg-gold-light/20" />
-                <span className="h-4 w-24 bg-gold-light/20" />
-                <span className="h-3 w-32 bg-gold-light/10" />
+                <span className="h-4 w-24 bg-gold-light/20 rounded" />
+                <span className="h-3 w-32 bg-gold-light/10 rounded" />
               </div>
             ))}
           </div>
@@ -77,23 +77,27 @@ export default function ClubCards() {
         )}
 
         {clubs && clubs.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gold-light/25 border border-gold-light/25">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-gold-light/25 border border-gold-light/25 p-6">
             {clubs.map((club, i) => {
               const Icon = FALLBACK_ICONS[i % FALLBACK_ICONS.length];
               return (
                 <Reveal key={club._id} delay={i * 0.12} scale={0.97}>
                   <Link
                     href={`/clubs/${club.slug}`}
-                    className="group bg-ivory h-full px-8 py-12 flex flex-col items-center text-center gap-5 hover:bg-beige transition-colors duration-300"
+                    className="group bg-ivory h-full px-8 py-12 flex flex-col items-center  justify-between text-center gap-5 hover:bg-beige transition-colors duration-300 rounded-xl shadow-sm"
                   >
+                    <div>
                     <IconFrame icon={Icon} />
                     <h3 className="font-serif text-xl tracking-wide uppercase text-ink">
                       {club.name}
                     </h3>
-                    <span className="block w-6 h-px bg-gold-light" />
+                    <span className="block w-6 h-px bg-gold-light mx-auto" />
                     <p className="text-sm leading-relaxed text-ink/65 font-sans">
                       {club.tagline}
                     </p>
+
+                    </div>
+                    
                     <span className="mt-1 font-sans text-[11px] tracking-widest2 uppercase text-gold-dark group-hover:underline">
                       {club.membershipOpen ? 'View Club \u2192' : 'View Club'}
                     </span>

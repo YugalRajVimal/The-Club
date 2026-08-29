@@ -1,10 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CheckCircle2, LockKeyhole } from 'lucide-react';
 import { ApiClientError, getClubBySlug } from '@/lib/api/client';
+import { motion } from 'framer-motion';
+import Monogram from '@/components/ui/Monogram';
 import HairlineDivider from '@/components/ui/HairlineDivider';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Reveal from '@/components/ui/Reveal';
+import { useEffect, useState } from 'react';
 
 interface ClubDetailPageProps {
   params: { slug: string };
@@ -23,55 +28,150 @@ async function loadClub(slug: string) {
   }
 }
 
-const infoBlocks = (club: Awaited<ReturnType<typeof loadClub>>) => [
-  { label: 'Who We Are?', copy: club.whoWeAre },
-  { label: 'What Is Unique About Us?', copy: club.whatIsUnique },
-  { label: 'Who Should Join Us?', copy: club.whoShouldJoin },
-  { label: 'How Do You Benefit?', copy: club.howYouBenefit },
-];
+export default function ClubDetailPage({ params }: ClubDetailPageProps) {
+  // Client component: useSWR or react-query would be ideal, but we'll keep plain for now
+  const [club, setClub] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
-  const club = await loadClub(params.slug);
-  const blocks = infoBlocks(club);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const clubData = await loadClub(params.slug);
+      setClub(clubData);
+      setLoading(false);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.slug]);
+
+  if (loading || !club) {
+    return (
+      <main>
+        {/* Optionally a spinner or skeleton screen */}
+        <section className="pt-40 text-center text-xl text-ink/70">Loading...</section>
+      </main>
+    );
+  }
+
+  const blocks = [
+    {
+      label: 'Who we are?',
+      copy: `A private members’ society founded on discretion, standing since our first charter, and sustained by a small circle of sponsors and members.`,
+    },
+    {
+      label: 'Why is it unique?',
+      copy: `Four distinct circles operate under one Society, each with its own admissions standard, yet every member draws on the privileges of all.`,
+    },
+    {
+      label: 'How do you benefit?',
+      copy: `Access to vetted real estate, travel, acquisitions and enterprise, arranged through a single point of introduction and account.`,
+    },
+    {
+      label: 'Who should join?',
+      copy: `Those who value privacy over publicity, and relationships built over years rather than transactions built for the moment.`,
+    },
+  ];
 
   return (
     <main>
-      {/* Header */}
+      {/* Header Hero with club.name */}
       <section className="relative overflow-hidden bg-ivory">
+        {/* soft sepia-toned ambient background, built purely in CSS */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
-            background: club.heroImageUrl
-              ? `linear-gradient(rgba(253,252,249,0.88), rgba(253,252,249,0.96)), url(${club.heroImageUrl}) center/cover no-repeat`
-              : 'radial-gradient(ellipse 60% 50% at 50% 8%, rgba(198,168,92,0.14), transparent 60%)',
+            background:
+              'radial-gradient(ellipse 60% 50% at 50% 8%, rgba(198,168,92,0.14), transparent 60%), radial-gradient(ellipse 70% 60% at 50% 100%, rgba(227,213,184,0.4), transparent 65%)',
           }}
         />
-        <div className="relative max-w-3xl mx-auto px-6 pt-24 pb-16 md:pt-32 md:pb-20 flex flex-col items-center text-center">
-          <p className="eyebrow">The Ashworth Club &middot; Est. by Charter</p>
-          <HairlineDivider width="72px" className="mt-6" />
-          <h1 className="font-serif text-[2.5rem] leading-[1.1] md:text-5xl text-ink mt-6">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 border-x border-gold-light/0 md:border-gold-light/20 max-w-6xl mx-auto"
+        />
+        <div className="relative max-w-3xl mx-auto px-6 pt-28 pb-24 md:pt-36 md:pb-32 flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, ease: [0.22, 0.61, 0.36, 1] }}
+          >
+            <Monogram size={92} />
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.4 }}
+            className="eyebrow mt-9"
+          >
+            Established for the Discerning &middot; By Invitation
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.55 }}
+            className="mt-6 w-full"
+          >
+            <HairlineDivider width="88px" />
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              delay: 0.7,
+              ease: [0.22, 0.61, 0.36, 1],
+            }}
+            className="font-serif text-[2.75rem] leading-[1.1] md:text-6xl md:leading-[1.08] text-ink mt-6"
+          >
             {club.name}
-          </h1>
-          <p className="mt-6 text-base md:text-lg text-ink/70 max-w-xl leading-relaxed font-sans">
-            {club.tagline}
-          </p>
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.95 }}
+            className="mt-6 w-full"
+          >
+            <HairlineDivider width="88px" />
+          </motion.div>
+          {club.tagline && (
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 1.05 }}
+              className="mt-8 text-base md:text-lg text-ink/70 max-w-xl leading-relaxed font-sans"
+            >
+              {club.tagline}
+            </motion.p>
+          )}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.25 }}
+            className="mt-12"
+          >
+            <a
+              href="#membership"
+              className="inline-flex items-center gap-3 border border-gold px-9 py-3.5 font-sans text-[13px] tracking-widest2 uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-500"
+            >
+              Enquire About Membership
+            </a>
+          </motion.div>
         </div>
       </section>
 
-      {/* Who / Why / How / Who-should */}
-      <section className="bg-beige py-20 md:py-24">
+      {/* About the Club */}
+      <section className="bg-beige py-24 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
+          <SectionHeading eyebrow="Est. &middot; By Charter" title={`About the ${club.name}`} />
           <Reveal scale={0.98}>
-            <div className="border border-gold-light/50 bg-ivory px-6 py-4 md:px-10">
-              <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gold-light/40">
+            <div className=" px-6 py-4 md:px-10">
+              <div className="flex flex-col md:flex-row divide-y gap-6 ">
                 {blocks.map((block) => (
                   <div
                     key={block.label}
-                    className="flex-1 py-10 md:py-12 px-2 md:px-8 text-center flex flex-col items-center"
+                    className="border border-gold-light/50 bg-ivory rounded-sm flex-1 py-10 md:py-12 px-2 md:px-8 text-center flex flex-col items-center"
                   >
                     <span className="eyebrow mb-4">{block.label}</span>
-                    <p className="text-sm leading-relaxed text-ink/70 font-sans max-w-[240px]">
+                    <p className="text-sm leading-relaxed text-ink/70 font-sans max-w-[220px]">
                       {block.copy}
                     </p>
                   </div>
@@ -96,7 +196,7 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
               <div className="border border-gold-light/50 bg-beige h-full px-8 py-10">
                 <h3 className="font-serif text-xl text-ink mb-6">Features</h3>
                 <ul className="space-y-4">
-                  {club.whatWeOffer.features.map((feature) => (
+                  {club.whatWeOffer.features.map((feature: string) => (
                     <li key={feature} className="flex items-start gap-3">
                       <span className="mt-1.5 diamond shrink-0" />
                       <span className="font-sans text-[15px] leading-snug text-ink/85">
@@ -112,7 +212,7 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
               <div className="border border-gold-light/50 bg-beige h-full px-8 py-10">
                 <h3 className="font-serif text-xl text-ink mb-6">Benefits</h3>
                 <ul className="space-y-4">
-                  {club.whatWeOffer.benefits.map((benefit) => (
+                  {club.whatWeOffer.benefits.map((benefit: string) => (
                     <li key={benefit} className="flex items-start gap-3">
                       <CheckCircle2
                         size={18}
@@ -132,7 +232,7 @@ export default async function ClubDetailPage({ params }: ClubDetailPageProps) {
       </section>
 
       {/* Membership Open Now / Closed */}
-      <section className="bg-beige py-20 md:py-24">
+      <section id="membership" className="bg-beige py-20 md:py-24">
         <div className="max-w-3xl mx-auto px-6">
           <Reveal scale={0.98}>
             <div className="border border-gold-light/50 bg-ivory px-8 py-14 md:px-16 text-center flex flex-col items-center">

@@ -5,20 +5,36 @@ import Reveal from './ui/Reveal';
 import HairlineDivider from './ui/HairlineDivider';
 
 const categories = [
-  { icon: Landmark, name: 'Real Estate' },
-  { icon: Car, name: 'Luxury Cars' },
-  { icon: Plane, name: 'Luxury Business Travel' },
-  { icon: Palmtree, name: 'Luxury Holidays' },
+  {
+    icon: Landmark,
+    name: 'Real Estate',
+    description: 'Vetted property listings and exclusive introductions for purchase, sale, or investment.'
+  },
+  {
+    icon: Car,
+    name: 'Luxury Cars',
+    description: 'Access to luxury and collectible vehicles—trade, purchase, or sell discreetly.'
+  },
+  {
+    icon: Plane,
+    name: 'Luxury Business Travel',
+    description: 'Chartered flights, executive aviation, and bespoke travel for members and their guests.'
+  },
+  {
+    icon: Palmtree,
+    name: 'Luxury Holidays',
+    description: 'Getaways, resorts, and curated experiences at premier destinations worldwide.'
+  },
 ];
 
 const pills = ['Booking', 'Sell', 'Purchase', 'Buyback', 'Launch', 'Pre-Approved'];
 
 const brandingItems = [
-  { icon: Rocket, label: 'Launches & Promotions' },
-  { icon: ClipboardList, label: 'Campaigns & Surveys' },
-  { icon: Video, label: 'Videos, Reels & Display' },
-  { icon: Globe, label: 'Website Development' },
-  { icon: TrendingUp, label: 'Digital Marketing' },
+  { icon: Rocket, label: 'Launches & Promotions', description: "Strategic support for new business launches, product introductions, and promotional campaigns to maximize reach and impact." },
+  { icon: ClipboardList, label: 'Campaigns & Surveys', description: "Organizing marketing campaigns and gathering actionable insights through targeted surveys." },
+  { icon: Video, label: 'Videos, Reels & Display', description: "Creation of video content, reels, and visuals to enhance brand visibility across digital and physical platforms." },
+  { icon: Globe, label: 'Website Development', description: "Custom website design and development services for high-impact digital presence." },
+  { icon: TrendingUp, label: 'Digital Marketing', description: "Digital marketing strategies encompassing SEO, social media, and online advertising for broad engagement." },
 ];
 
 export default function Marketplace() {
@@ -31,12 +47,14 @@ export default function Marketplace() {
           subtitle="A private exchange for assets and experiences, transacted with the same discretion afforded every member relationship."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gold-light/25 border border-gold-light/25">
+        {/* Added gap-8 for proper spacing between cards and removed bg/border from grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((cat, i) => (
             <Reveal key={cat.name} delay={i * 0.1} scale={0.97}>
-              <div className="bg-ivory h-full px-6 py-10 flex flex-col items-center text-center gap-5">
+              <div className="bg-ivory border border-gold-light/30 h-full px-6 py-10 flex flex-col items-center text-center gap-5 rounded-lg shadow-sm">
                 <IconFrame icon={cat.icon} />
                 <h3 className="font-serif text-lg text-ink">{cat.name}</h3>
+                <p className="text-sm text-ink/70 font-sans mb-2 leading-snug">{cat.description}</p>
                 <div className="flex flex-wrap justify-center gap-2 mt-1">
                   {pills.map((pill) => (
                     <span
@@ -64,10 +82,13 @@ export default function Marketplace() {
               </div>
               <div className="flex flex-wrap justify-center gap-x-12 gap-y-8">
                 {brandingItems.map((item) => (
-                  <div key={item.label} className="flex flex-col items-center gap-3 w-32 text-center">
+                  <div key={item.label} className="flex flex-col items-center gap-2 w-32 text-center">
                     <IconFrame icon={item.icon} size="sm" />
-                    <span className="text-xs font-sans tracking-wide text-ink/70 leading-snug">
+                    <span className="text-sm font-sans tracking-wide text-ink/70 leading-snug">
                       {item.label}
+                    </span>
+                    <span className="text-[11px] text-ink/50 font-sans leading-snug mt-1">
+                      {item.description}
                     </span>
                   </div>
                 ))}

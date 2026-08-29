@@ -34,18 +34,19 @@ const items = [
 export default function Collaborations() {
   return (
     <section className="bg-beige py-24 md:py-28">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         <SectionHeading eyebrow="In Confidence" title="Collaborations & Partnerships" />
 
-        <div className="border-t border-gold-light/40">
+        <div className="flex flex-wrap gap-8 mt-10 justify-center">
           {items.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.08} y={10}>
-              <div className="flex items-center gap-6 py-6 border-b border-gold-light/40">
-                <IconFrame icon={item.icon} size="sm" />
-                <div className="text-left">
-                  <h3 className="font-serif text-lg text-ink">{item.title}</h3>
-                  <p className="text-sm text-ink/60 font-sans mt-0.5">{item.line}</p>
+              <div className="flex flex-col items-center text-center bg-ivory border border-gold-light/40 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 px-7 py-10 mb-2"
+                style={{ flex: '1 1 275px', minWidth: 260, maxWidth: 340 }}>
+                <div className="mb-5">
+                  <IconFrame icon={item.icon} size="lg" />
                 </div>
+                <h3 className="font-serif text-xl text-ink mb-2">{item.title}</h3>
+                <p className="text-sm text-ink/70 font-sans">{item.line}</p>
               </div>
             </Reveal>
           ))}
