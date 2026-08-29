@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -59,11 +59,22 @@ function StepIndicator({ step }: { step: SignupStep }) {
 
 function JoinWizard({ club }: { club: Club }) {
   const { step, beginForClub } = useSignup();
+  const router = useRouter();
 
   useEffect(() => {
     beginForClub(club._id, club.slug, club.name);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [club._id]);
+
+  // Redirect after 2 seconds when step becomes 'complete'
+  useEffect(() => {
+    if (step === 'complete') {
+      const timeout = setTimeout(() => {
+        router.push('/membership/payment');
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [step, router]);
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-24 md:py-28">
