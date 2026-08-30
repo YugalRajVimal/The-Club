@@ -1,5 +1,8 @@
-node_modules
-dist
+node_modules/
+.next/
+dist/
 .env
-uploads/
-*.log
+.env.local
+.env.local.example
+.DS_Store
+EOF
