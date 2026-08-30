@@ -1,4 +1,4 @@
-// Types generated directly from the Ashworth Club API CONTRACT.
+// Types generated directly from VRK Group API CONTRACT.
 // Do not rename any field without updating the contract first.
 
 export type ApiErrorCode =

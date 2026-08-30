@@ -21,7 +21,7 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'The Ashworth Club — A Private Members\u2019 Society',
+  title: 'VRK Group — A Private Members\u2019 Society',
   description:
     'An established private members\u2019 club and lifestyle marketplace, extending curated privilege across real estate, travel, collaborations and entertainment.',
 };

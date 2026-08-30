@@ -9,13 +9,14 @@ interface SectionHeadingProps {
 
 export default function SectionHeading({ eyebrow, title, subtitle }: SectionHeadingProps) {
   return (
-    <div className="text-center max-w-2xl mx-auto mb-16">
+    <div className="text-center max-w-2xl mx-auto mb-3">
       <Reveal>
-        <p className="eyebrow mb-4">{eyebrow}</p>
+        
         <h2 className="section-heading">{title}</h2>
-        <HairlineDivider width="64px" className="mt-6" />
+        <p className="eyebrow mb-2 mt-4">{eyebrow}</p>
+        <HairlineDivider width="64px" className="mt-2" />
         {subtitle && (
-          <p className="mt-6 text-[15px] leading-relaxed text-ink/70">{subtitle}</p>
+          <p className="mt-5 text-[15px] leading-relaxed text-ink/70">{subtitle}</p>
         )}
       </Reveal>
     </div>

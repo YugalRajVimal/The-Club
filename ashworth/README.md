@@ -1,4 +1,4 @@
-# The Ashworth Club — User-Side Frontend (Epic 1 + Epic 2 + Epic 3 + Epic 4)
+# VRK Group — User-Side Frontend (Epic 1 + Epic 2 + Epic 3 + Epic 4)
 
 Next.js 14 (App Router) + TypeScript + Tailwind CSS.
 

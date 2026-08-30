@@ -1,4 +1,4 @@
-import { Landmark, Car, Plane, Palmtree, Rocket, ClipboardList, Video, Globe, TrendingUp } from 'lucide-react';
+import { Landmark, Car, Plane, Palmtree, Rocket, ClipboardList, Video, Globe, TrendingUp, Ship } from 'lucide-react';
 import SectionHeading from './ui/SectionHeading';
 import IconFrame from './ui/IconFrame';
 import Reveal from './ui/Reveal';
@@ -10,10 +10,11 @@ const categories = [
     name: 'Real Estate',
     description: 'Vetted property listings and exclusive introductions for purchase, sale, or investment.'
   },
+
   {
-    icon: Car,
-    name: 'Luxury Cars',
-    description: 'Access to luxury and collectible vehicles—trade, purchase, or sell discreetly.'
+    icon: Palmtree,
+    name: 'Luxury Holidays',
+    description: 'Getaways, resorts, and curated experiences at premier destinations worldwide.'
   },
   {
     icon: Plane,
@@ -21,25 +22,37 @@ const categories = [
     description: 'Chartered flights, executive aviation, and bespoke travel for members and their guests.'
   },
   {
-    icon: Palmtree,
-    name: 'Luxury Holidays',
-    description: 'Getaways, resorts, and curated experiences at premier destinations worldwide.'
+    icon: Car,
+    name: 'Luxury Cars',
+    description: 'Access to luxury and collectible vehicles—trade, purchase, or sell discreetly.'
   },
+  {
+    icon: Plane,
+    name: 'Luxury Aviation',
+    description: 'Private jets, charter flights, and luxury aviation services for rapid and exclusive international connections.'
+  },
+  {
+    icon: Ship,
+    name: 'Luxury Yachts',
+    description: 'Access to private yachts, charters, and discreet purchase or sale for exclusive seafaring experiences.'
+  },
+
 ];
 
 const pills = ['Booking', 'Sell', 'Purchase', 'Buyback', 'Launch', 'Pre-Approved'];
 
 const brandingItems = [
-  { icon: Rocket, label: 'Launches & Promotions', description: "Strategic support for new business launches, product introductions, and promotional campaigns to maximize reach and impact." },
-  { icon: ClipboardList, label: 'Campaigns & Surveys', description: "Organizing marketing campaigns and gathering actionable insights through targeted surveys." },
-  { icon: Video, label: 'Videos, Reels & Display', description: "Creation of video content, reels, and visuals to enhance brand visibility across digital and physical platforms." },
-  { icon: Globe, label: 'Website Development', description: "Custom website design and development services for high-impact digital presence." },
+  { icon: Landmark, label: 'Brand Strategy', description: "End-to-end brand positioning, messaging, and identity building for businesses and individuals." },
+  { icon: Rocket, label: 'Launches And Promotions', description: "Strategic support for new business launches, product introductions, and promotional campaigns to maximize reach and impact." },
+  { icon: ClipboardList, label: 'Campaigns And Surveys', description: "Organizing marketing campaigns and gathering actionable insights through targeted surveys." },
   { icon: TrendingUp, label: 'Digital Marketing', description: "Digital marketing strategies encompassing SEO, social media, and online advertising for broad engagement." },
+  { icon: Globe, label: 'Website Development', description: "Custom website design and development services for high-impact digital presence." },
+  { icon: Video, label: 'Videos, Reels And Display', description: "Creation of video content, reels, and visuals to enhance brand visibility across digital and physical platforms." },
 ];
 
 export default function Marketplace() {
   return (
-    <section className="bg-beige py-24 md:py-28">
+    <section className="bg-beige py-12 md:py-12">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeading
           eyebrow="For Members"
@@ -48,7 +61,7 @@ export default function Marketplace() {
         />
 
         {/* Added gap-8 for proper spacing between cards and removed bg/border from grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat, i) => (
             <Reveal key={cat.name} delay={i * 0.1} scale={0.97}>
               <div className="bg-ivory border border-gold-light/30 h-full px-6 py-10 flex flex-col items-center text-center gap-5 rounded-lg shadow-sm">
@@ -72,7 +85,7 @@ export default function Marketplace() {
 
         <div className="mt-20">
           <Reveal scale={0.98}>
-            <div className="border border-gold-light/50 bg-ivory px-6 py-12 md:px-14">
+            <div className="border border-gold-light/50 bg-gold-light/25 px-6 py-6 ">
               <div className="text-center mb-10">
                 <p className="eyebrow">In Support</p>
                 <h3 className="font-serif text-2xl md:text-3xl text-ink mt-2">
@@ -80,22 +93,23 @@ export default function Marketplace() {
                 </h3>
                 <HairlineDivider width="48px" className="mt-5" />
               </div>
-              <div className="flex flex-wrap justify-center gap-x-12 gap-y-8">
-                {brandingItems.map((item) => (
-                  <div key={item.label} className="flex flex-col items-center gap-2 w-32 text-center">
-                    <IconFrame icon={item.icon} size="sm" />
-                    <span className="text-sm font-sans tracking-wide text-ink/70 leading-snug">
-                      {item.label}
-                    </span>
-                    <span className="text-[11px] text-ink/50 font-sans leading-snug mt-1">
-                      {item.description}
-                    </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+                {brandingItems.map((item, i) => (
+                  <div
+                    key={item.label}
+                    className="bg-white border border-gold-light/30 rounded-lg shadow-sm flex flex-col items-center text-center px-7 py-10 h-full"
+                    style={{ minHeight: 240, maxWidth: 350, margin: "0 auto" }}
+                  >
+                    <IconFrame icon={item.icon} size="md" />
+                    <h4 className="font-serif text-lg text-ink mt-4 mb-1">{item.label}</h4>
+                    <p className="text-sm text-ink/70 font-sans leading-snug">{item.description}</p>
                   </div>
                 ))}
               </div>
             </div>
           </Reveal>
         </div>
+   
       </div>
     </section>
   );

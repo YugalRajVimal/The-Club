@@ -12,7 +12,7 @@ export default function Home() {
     <main>
       <Hero />
       <ClubCards />
-      <AboutClub />
+      {/* <AboutClub /> */}
       {/* <PathToMembership /> */}
       <Collaborations />
       <EventsEntertainment />

@@ -5,7 +5,7 @@ import { useSignup } from '@/context/SignupContext';
 
 const CONSENT_VERSION = 'v1-2026';
 
-const AGREEMENT_TEXT = `Membership Agreement — The Ashworth Club
+const AGREEMENT_TEXT = `Membership Agreement — VRK Group
 
 1. Discretion. Every member agrees to hold the identity and affairs of fellow members in strict confidence, and understands that the Society's arrangements are extended on that basis alone.
 

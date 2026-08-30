@@ -23,7 +23,7 @@
 // //         <Link href="/" className="flex items-center gap-3 group">
 // //           <Monogram size={28} animated={false} />
 // //           <span className="font-serif text-lg tracking-wide text-ink group-hover:text-gold-dark transition-colors">
-// //             The Ashworth Club
+// //             VRK Group
 // //           </span>
 // //         </Link>
 
@@ -136,7 +136,7 @@
 //         <Link href="/" className="flex items-center gap-3 group shrink-0">
 //           <Monogram size={30} animated={false} />
 //           <span className="font-serif text-lg tracking-wide text-ink group-hover:text-gold-dark transition-colors">
-//             The Ashworth Club
+//             VRK Group
 //           </span>
 //         </Link>
 
@@ -239,8 +239,10 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-30 bg-ivory/95 backdrop-blur border-b border-gold-light/30">
-       {/* Row 1: social icons + contact info */}
+    // <header className="sticky top-0 z-30 bg-ivory/95 backdrop-blur border-b border-gold-light/30">
+    <header className="sticky top-0 z-30 bg-beige backdrop-blur border-b border-gold-light/30">
+
+    {/* Row 1: social icons + contact info */}
        <div className="max-w-7xl  mx-auto px-6 py-3 flex items-center justify-between gap-3 flex-wrap w-full">
             <div className="flex items-center gap-2">
               {SOCIAL_ICONS.map((Icon, i) => (
@@ -269,10 +271,10 @@ export default function Header() {
           </div>
       <div className="max-w-7xl mx-auto px-6 pb-3 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         {/* Left: logo */}
-        <Link href="/" className="flex items-center gap-3 group shrink-0">
-          <Monogram size={34} animated={false} />
-          <span className="font-serif text-xl tracking-wide text-ink group-hover:text-gold-dark transition-colors">
-            The Ashworth Club
+        <Link href="/" className="flex flex-col justify-center items-center gap-1 group shrink-0">
+          <Monogram size={60} animated={false} />
+          <span className="font-serif text-3xl tracking-wide text-ink group-hover:text-gold-dark transition-colors">
+            VRK Group
           </span>
         </Link>
 

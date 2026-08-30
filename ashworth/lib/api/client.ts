@@ -117,7 +117,7 @@ async function apiFetch<T>(path: string, options: RequestOptions = {}): Promise<
   } catch {
     throw new ApiClientError(
       'SERVER_ERROR',
-      'Could not reach the Ashworth Club servers. Please check your connection and try again.'
+      'Could not reach VRK Group servers. Please check your connection and try again.'
     );
   }
 
@@ -294,7 +294,7 @@ export async function downloadReceiptPdf(): Promise<Blob> {
   } catch {
     throw new ApiClientError(
       'SERVER_ERROR',
-      'Could not reach the Ashworth Club servers. Please check your connection and try again.'
+      'Could not reach VRK Group servers. Please check your connection and try again.'
     );
   }
 
@@ -363,7 +363,7 @@ export async function uploadDocument(
   } catch {
     throw new ApiClientError(
       'SERVER_ERROR',
-      'Could not reach the Ashworth Club servers. Please check your connection and try again.'
+      'Could not reach VRK Group servers. Please check your connection and try again.'
     );
   }
 
@@ -453,7 +453,7 @@ export function uploadDocumentWithProgress(
       reject(
         new ApiClientError(
           'SERVER_ERROR',
-          'Could not reach the Ashworth Club servers. Please check your connection and try again.'
+          'Could not reach VRK Group servers. Please check your connection and try again.'
         )
       );
     };
