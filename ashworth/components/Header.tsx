@@ -15,22 +15,75 @@ import {
   LogOut,
   UserRound,
   ChevronDown,
+  ChevronRight as ChevronRightIcon,
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/context/AuthContext';
 import Monogram from '@/components/ui/Monogram';
 import { useState } from 'react';
 
-// NAVIGATION DATA
+// NAVIGATION DATA (modified for 3-level subnav for Partners Connect)
 const navigation = [
   {
-    label: 'ABOUT US',
-    href: '/about',
+    label: 'CLUBS',
+    href: '/club',
     children: [
-      { label: 'CHAIRMAN', href: '/about/chairman' },
-      { label: 'BOARD OF DIRECTORS', href: '/about/board' },
-      { label: 'ADVISORS', href: '/about/advisors' },
-      { label: 'CONSULTANTS', href: '/about/consultants' },
+      { label: 'CLUB One', href: '/clubs/club-one' },
+      { label: 'CLUB Two' , href: '/clubs/club-two'},
+      { label: 'CLUB Three' , href: '/clubs/club-three'},
+      { label: 'CLUB Four' , href: '/clubs/club-four'},
+    ],
+  },
+  {
+    label: 'PARTNERSHIPS OPPORTUNITIES',
+    href: '/partnerships',
+    children: [
+      { 
+        label: 'INVESTORS CONNNECT',
+        href: '/partnerships/technology',
+        children: [
+          { label: 'Startup Management', href: '/partnerships/investors/startup-management' },
+          { label: 'Fundraising', href: '/partnerships/investors/fund-raising' },
+          { label: 'Merger Aquisition', href: '/partnerships/investors/merger-aquisition' },
+        ]
+      },
+ 
+      {
+        label: 'PARTNERS CONNNECT',
+        href: '/partnerships/partners',
+        children: [
+          { label: 'TECHNOLOGY PARTNERS', href: '/partnerships/technology' },
+          { label: 'STRATEGIC PARTNERS', href: '/partnerships/strategic' },
+          { label: 'BUSINESS PARTNERS', href: '/partnerships/business' },
+          { label: 'DELIVERY PARTNERS', href: '/partnerships/delivery' },
+        ]
+      },
+      { label: 'FRANCHISE CONNECT', href: '/partnerships/franchise' },
+
+    ],
+  },
+  {
+    label: 'EVENTS & ENTERTAINMENT',
+    href: '/events',
+    children: [
+      { label: 'Investors Meets', href: '/events/investors-meets' },
+      { label: 'Partners Meets', href: '/events/partners-meets' },
+      { label: 'Franchisee Meets', href: '/events/franchisee-meets' },
+      { label: 'Music Concerts', href: '/events/music-concerts' },
+      { label: 'Events: Branding — Launches, Promotions, Campaigns & Surveys', href: '/events/branding-launches' },
+      { label: 'Conferences and Forums', href: '/events/conferences-forums' },
+    ],
+  },
+  {
+    label: 'MARKETPLACE',
+    href: '/marketplace',
+    children: [
+      { label: 'Investors Meets', href: '/events/investors-meets' },
+      { label: 'Partners Meets', href: '/events/partners-meets' },
+      { label: 'Franchisee Meets', href: '/events/franchisee-meets' },
+      { label: 'Music Concerts', href: '/events/music-concerts' },
+      { label: 'Events: Branding — Launches, Promotions, Campaigns & Surveys', href: '/events/branding-launches' },
+      { label: 'Conferences and Forums', href: '/events/conferences-forums' },
     ],
   },
   {
@@ -43,16 +96,18 @@ const navigation = [
     ],
   },
   {
-    label: 'ADVISORY & CONSULTING',
+    label: 'MANAGEMENT SERVICES',
     href: '/advisory-consulting',
     children: [
+      { label: 'BOARD ADVISORY', href: '/advisory-consulting/board' },
       { label: 'CORPORATE GOVERNANCE ADVISORY', href: '/advisory-consulting/corporate-governance' },
-      { label: 'MEDIA ADVERTISING & PRODUCTION', href: '/advisory-consulting/media-advertising' },
-      { label: 'BRANDING, PR & IMAGE CONSULTING', href: '/advisory-consulting/branding-pr' },
       { label: 'BUSINESS ADVISORY & CONSULTING', href: '/advisory-consulting/business' },
-      { label: 'LEGAL ADVISORY & CONSULTING', href: '/advisory-consulting/legal' },
-      { label: 'FINANCIAL ADVISORY & CONSULTING', href: '/advisory-consulting/financial' },
       { label: 'HR TRANSFORMATIONAL CONSULTING', href: '/advisory-consulting/hr-transformational' },
+      { label: 'LEGAL ADVISORY & CONSULTING', href: '/advisory-consulting/legal' },
+      { label: 'BRANDING, PR & IMAGE CONSULTING', href: '/advisory-consulting/branding-pr' },
+      { label: 'MEDIA ADVERTISING & PRODUCTION', href: '/advisory-consulting/media-advertising' },
+      { label: 'FINANCIAL ADVISORY & CONSULTING', href: '/advisory-consulting/financial' },
+      { label: 'PAY ROLLS', href: '/advisory-consulting/pay-rolls' },
     ],
   },
   {
@@ -68,22 +123,8 @@ const navigation = [
       { label: 'INTERNSHIP PROGRAMS', href: '/coaching-mentoring/internship' },
     ],
   },
-  {
-    label: 'PARTNERSHIPS & TIE-UPS',
-    href: '/partnerships',
-    children: [
-      { label: 'TECHNOLOGY PARTNERS', href: '/partnerships/technology' },
-      { label: 'FRANCHISE PARTNERS', href: '/partnerships/franchise' },
-      { label: 'STRATEGIC PARTNERS', href: '/partnerships/strategic' },
-      { label: 'BUSINESS PARTNERS', href: '/partnerships/business' },
-      { label: 'EXPANSION PARTNERS', href: '/partnerships/expansion' },
-      { label: 'DELIVERY PARTNERS', href: '/partnerships/delivery' },
-    ],
-  },
-  {
-    label: 'EVENTS & ENTERTAINMENT',
-    href: '/events',
-  },
+
+
   {
     label: 'NEWS ROOM',
     href: '/news',
@@ -96,18 +137,28 @@ const navigation = [
 
 const SOCIAL_ICONS = [Facebook, Instagram, Linkedin, Twitter, MessageCircle, Youtube];
 
-function useDropdown() {
-  // For simple UX: manage open by index (one open max)
+// Custom Hook for multi-level dropdowns
+function useDropdowns() {
+  // For first-level: main nav index, for second-level: (mainIdx, subIdx)
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const open = (idx: number) => setOpenIdx(idx);
-  const close = () => setOpenIdx(null);
-  return { openIdx, open, close };
+  const [openSubIdx, setOpenSubIdx] = useState<number | null>(null);
+  const open = (idx: number) => {
+    setOpenIdx(idx);
+    setOpenSubIdx(null);
+  };
+  const close = () => {
+    setOpenIdx(null);
+    setOpenSubIdx(null);
+  };
+  const openSub = (subIdx: number) => setOpenSubIdx(subIdx);
+  const closeSub = () => setOpenSubIdx(null);
+  return { openIdx, open, close, openSubIdx, openSub, closeSub };
 }
 
 export default function Header() {
   const { isAuthenticated, isLoading, logout } = useAuth();
   const router = useRouter();
-  const dropdown = useDropdown();
+  const dropdown = useDropdowns();
 
   async function handleLogout() {
     await logout();
@@ -119,7 +170,7 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-30 bg-beige backdrop-blur border-b border-gold-light/30">
         {/* Row 1: social icons + contact info */}
-        <div className="max-w-7xl  mx-auto px-6 py-3 flex items-center justify-between gap-3 flex-wrap w-full">
+        <div className=" mx-auto px-6 py-3 flex items-center justify-between gap-3 flex-wrap w-full">
           <div className="flex items-center gap-2">
             {SOCIAL_ICONS.map((Icon, i) => (
               <button
@@ -142,7 +193,7 @@ export default function Header() {
             </span>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 pb-3 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div className=" mx-auto mx-16 px-6 pb-3 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           {/* Left: logo */}
           <Link href="/" className="flex flex-col justify-center items-center gap-1 group shrink-0">
             <Monogram size={60} animated={false} />
@@ -249,20 +300,63 @@ export default function Header() {
                       the page instead of pushing content below it down. */}
                   {item.children && dropdown.openIdx === idx && (
                     <div
-                      className="absolute top-full left-0 min-w-[220px] border border-gold-light/60 shadow-xl rounded-b z-20 py-1 animate-fadeIn"
+                      className="absolute top-full left-0 w-max border border-gold-light/60 shadow-xl rounded-b z-20 py-1 animate-fadeIn bg-ivory"
                       role="menu"
                     >
                       <ul>
-                        {item.children.map((child) => (
-                          <li key={child.label}>
-                            <Link
-                              href={child.href}
-                              className="block px-4 py-2 text-[13px] bg-ivory hover:bg-beige hover:text-gold-dark transition-colors whitespace-nowrap uppercase"
-                            >
-                              {child.label}
-                            </Link>
-                          </li>
-                        ))}
+                        {item.children.map((child, subIdx) => {
+                          // For the specific multi-level Partner Connect
+                          if (child.children) {
+                            return (
+                              <li
+                                key={child.label}
+                                className="relative group"
+                                onMouseEnter={() => dropdown.openSub(subIdx)}
+                                onMouseLeave={dropdown.closeSub}
+                              >
+                                {/* Parent (subnav) item */}
+                                <button
+                                  type="button"
+                                  className="w-full flex items-center justify-between px-4 py-2 text-[13px] bg-ivory hover:bg-beige hover:text-gold-dark transition-colors whitespace-nowrap uppercase font-semibold"
+                                >
+                                  <span>{child.label}</span>
+                                  <ChevronRightIcon size={14} className="text-gold-dark ml-2" />
+                                </button>
+                                {/* Sub-subnav, only show if hovered */}
+                                {dropdown.openSubIdx === subIdx && (
+                                  <div
+                                    className="absolute left-full -top-1 w-max bg-ivory border border-gold-light/60 shadow-xl rounded z-30 py-1 animate-fadeIn min-w-[220px]"
+                                    role="menu"
+                                  >
+                                    <ul>
+                                      {child.children.map((subChild) => (
+                                        <li key={subChild.label}>
+                                          <Link
+                                            href={subChild.href}
+                                            className="block px-4 py-2 text-[13px] bg-ivory hover:bg-beige hover:text-gold-dark transition-colors whitespace-nowrap uppercase"
+                                          >
+                                            {subChild.label}
+                                          </Link>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </li>
+                            );
+                          }
+                          // Other standard level 2 entries
+                          return (
+                            <li key={child.label}>
+                              <Link
+                                href={child.href}
+                                className="block px-4 py-2 text-[13px] bg-ivory hover:bg-beige hover:text-gold-dark transition-colors whitespace-nowrap uppercase"
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   )}

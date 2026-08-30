@@ -5,12 +5,42 @@ import Reveal from './ui/Reveal';
 import { Music, Megaphone, Users, DollarSign, Handshake, Store } from 'lucide-react';
 
 const items = [
-  { title: 'Invitations: Music Concerts', icon: Music },
-  { title: 'Events: Branding — Launches, Promotions, Campaigns & Surveys', icon: Megaphone },
-  { title: 'Conferences and Forums', icon: Users },
-  { title: 'Investors Meets', icon: DollarSign },
-  { title: 'Partners Meets', icon: Handshake },
-  { title: 'Franchisee Meets', icon: Store },
+  {
+    title: 'Music Concerts',
+    icon: Music,
+    description:
+      'Live musical performances and entertainment events for members to enjoy celebrated artists and emerging talent.',
+  },
+  {
+    title: 'Events',
+    icon: Megaphone,
+    description:
+      'Launches, Promotions, Campaigns & Surveys',
+  },
+  {
+    title: 'Conferences and Forums',
+    icon: Users,
+    description:
+      'Insightful gatherings featuring luminaries and thought leaders, fostering dialogue and networking on industry trends.',
+  },
+  {
+    title: 'Investors Meets',
+    icon: DollarSign,
+    description:
+      'Periodic meets connecting members with investors for interactive sessions, funding opportunities, and deal-making.',
+  },
+  {
+    title: 'Partners Meets',
+    icon: Handshake,
+    description:
+      'Collaborative sessions bringing together business partners to discuss partnerships, opportunities, and shared goals.',
+  },
+  {
+    title: 'Franchisee Meets',
+    icon: Store,
+    description:
+      'Dedicated forums for franchisees, offering advice, updates, and networking within the enterprise ecosystem.',
+  },
 ];
 
 export default function EventsEntertainment() {
@@ -43,7 +73,8 @@ export default function EventsEntertainment() {
                       <div className="w-14 h-14 rounded-full flex items-center justify-center bg-gold-light/20 mb-5 shadow">
                         <Icon className="w-7 h-7 text-gold-dark" />
                       </div>
-                      <h3 className="font-serif text-lg text-ink mb-2 text-center">{item.title}</h3>
+                      <h3 className="font-serif text-xl tracking-wide uppercase text-ink mt-2">{item.title}</h3>
+                      <p className="eyebrow mb-2 mt-4 text-center">{item.description}</p>
                     </div>
                     <div className="w-10 h-px bg-gold-light mt-4 mb-1" />
                     {/* Two buttons side by side below (inside each card): */}
@@ -52,13 +83,13 @@ export default function EventsEntertainment() {
                         className="inline-flex items-center justify-center border border-gold px-6 py-2 rounded-md font-sans text-xs uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-300"
                         type="button"
                       >
-Register
+                        Register
                       </button>
                       <button
                         className="inline-flex items-center justify-center border border-gold px-6 py-2 rounded-md font-sans text-xs uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-300"
                         type="button"
                       >
-Participate
+                        Participate
                       </button>
                     </div>
                   </div>
