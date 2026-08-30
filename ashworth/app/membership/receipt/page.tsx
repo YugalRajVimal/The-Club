@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ScrollText, Download, Info, FileText } from 'lucide-react';
+import { ScrollText, Download, FileText } from 'lucide-react';
 import { toast } from 'react-toastify';
 import AuthGuard from '@/components/auth/AuthGuard';
 import HairlineDivider from '@/components/ui/HairlineDivider';
 import Monogram from '@/components/ui/Monogram';
-import LoadingState, { ErrorState } from '@/components/ui/LoadingState';
+import LoadingState from '@/components/ui/LoadingState';
 import { ApiClientError, downloadReceiptPdf, getReceipt } from '@/lib/api/client';
 import type { Receipt } from '@/lib/api/types';
 
@@ -23,34 +23,19 @@ function formatDate(iso: string) {
   }
 }
 
-// A fake receipt for demonstration if not fetched
-const SAMPLE_RECEIPT: Receipt = {
-  id: 'sample-id',
-  userId: 'sample-user-id',
-  receiptNumber: 'RCP0001234',
-  memberName: 'Sagar Yugal',
-  clubName: 'Club 1',
-  amount: 25000,
-  currency: 'INR',
-  paidAt: new Date().toISOString(),
-  downloadUrl: '',
-};
-
 function ReceiptPanel({
   receipt,
   handleDownload,
   isDownloading,
-  isSample = false,
   handleGoToDocuments,
 }: {
   receipt: Receipt;
   handleDownload?: () => void;
   isDownloading?: boolean;
-  isSample?: boolean;
   handleGoToDocuments?: () => void;
 }) {
   return (
-    <div className="border border-gold-light/50 bg-beige px-8 py-10">
+    <div className="bg-gold-light/25 border border-gold-light/25 px-8 py-10">
       <div className="flex items-center justify-center gap-3 mb-8 text-gold-dark">
         <ScrollText size={22} strokeWidth={1.25} />
         <span className="font-serif text-lg text-ink">
@@ -90,17 +75,15 @@ function ReceiptPanel({
       </dl>
 
       <div className="mt-8 flex flex-col gap-3">
-        {!isSample && (
-          <button
-            type="button"
-            onClick={handleDownload}
-            disabled={isDownloading}
-            className="w-full inline-flex items-center justify-center gap-3 border border-gold px-9 py-3.5 font-sans text-[13px] tracking-widest2 uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Download size={16} strokeWidth={1.5} />
-            {isDownloading ? 'Preparing Download…' : 'Download Receipt'}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={handleDownload}
+          disabled={isDownloading}
+          className="w-full inline-flex items-center justify-center gap-3 border border-gold px-9 py-3.5 font-sans text-[13px] tracking-widest2 uppercase text-gold-dark hover:bg-gold hover:text-ivory transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Download size={16} strokeWidth={1.5} />
+          {isDownloading ? 'Preparing Download…' : 'Download Receipt'}
+        </button>
 
         <button
           type="button"
@@ -169,11 +152,30 @@ function ReceiptView() {
     router.push('/membership/documents');
   }
 
-  // If API fails or receipt is null after fetching, show the sample
-  const shouldShowSample = error || !receipt;
+  if (error) {
+    return (
+      <main className="bg-beige min-h-[80vh]">
+        <div className="max-w-lg mx-auto px-6 py-24 md:py-28 ">
+          <div className="text-center mb-10 flex flex-col items-center">
+            <Monogram size={48} animated={false} />
+            <p className="eyebrow mt-6">Membership &middot; Receipt</p>
+            <h1 className="font-serif text-3xl text-ink mt-3">
+              Your Membership Receipt
+            </h1>
+            <HairlineDivider width="56px" className="mt-6" />
+          </div>
+          <div className="my-8 text-center">
+            <div className="text-rose-700 bg-red-50 rounded-lg py-4 px-6 mb-6">
+              {error}
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="bg-white min-h-[80vh]">
+    <main className="bg-beige min-h-[80vh]">
       <div className="max-w-lg mx-auto px-6 py-24 md:py-28">
         <div className="text-center mb-10 flex flex-col items-center">
           <Monogram size={48} animated={false} />
@@ -189,12 +191,6 @@ function ReceiptView() {
             receipt={receipt}
             handleDownload={handleDownload}
             isDownloading={isDownloading}
-            handleGoToDocuments={handleGoToDocuments}
-          />
-        ) : shouldShowSample ? (
-          <ReceiptPanel
-            receipt={SAMPLE_RECEIPT}
-            isSample={true}
             handleGoToDocuments={handleGoToDocuments}
           />
         ) : (

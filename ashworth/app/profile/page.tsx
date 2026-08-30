@@ -27,7 +27,7 @@ import {
 import type { MembershipStatus, UserProfileResponse } from '@/lib/api/types';
 
 const inputClasses =
-  'w-full border border-gold-light/50 bg-ivory px-4 py-2.5 font-sans text-sm text-ink placeholder:text-ink/35 focus:outline-none focus:border-gold transition-colors';
+  'w-full  bg-ivory px-4 py-2.5 font-sans text-sm text-ink placeholder:text-ink/35 focus:outline-none focus:border-gold transition-colors';
 
 function humanizeDocumentType(type: string) {
   return type
@@ -64,7 +64,7 @@ function StatusBanner({ status }: { status: MembershipStatus }) {
 
   const toneClasses: Record<typeof meta.tone, string> = {
     amber: 'border-amber-600/30 bg-amber-50 text-amber-800',
-    gold: 'border-gold-light/60 bg-beige text-gold-dark',
+    gold: 'border-gold-light/60 bg-gold-light/25 border border-gold-light/25 text-gold-dark',
     green: 'border-emerald-700/25 bg-emerald-50 text-emerald-800',
     red: 'border-red-700/25 bg-red-50 text-red-800',
   };
@@ -106,10 +106,11 @@ function StatusBanner({ status }: { status: MembershipStatus }) {
           </p>
           <Link
             href="/membership/documents"
-            className="mt-2 inline-flex items-center gap-2 border border-current px-7 py-2.5 font-sans text-[12px] tracking-widest2 uppercase hover:bg-current hover:text-ivory transition-colors duration-500"
+            className="mt-2 inline-flex items-center gap-2 border border-current px-7 py-2.5 font-sans text-[12px] tracking-widest2 uppercase hover:bg-gold-dark hover:text-ivory transition-colors duration-500"
           >
             Upload Documents
           </Link>
+     
         </>
       )}
 
@@ -208,7 +209,7 @@ function ProfileView() {
   }
 
   return (
-    <main className="bg-white min-h-[80vh]">
+    <main className="bg-beige min-h-[80vh]">
       <div className="max-w-3xl mx-auto px-6 py-24 md:py-28">
         <div className="text-center mb-10 flex flex-col items-center">
           <Monogram size={48} animated={false} />
@@ -227,7 +228,7 @@ function ProfileView() {
             <StatusBanner status={profile.membershipStatus} />
 
             {/* Club */}
-            <div className="border border-gold-light/50 bg-beige px-6 py-8 md:px-10">
+            <div className=" bg-gold-light/25 border border-gold-light/25 px-6 py-8 md:px-10">
               <p className="eyebrow mb-2">Club</p>
               <h2 className="font-serif text-2xl text-ink">{profile.club.name}</h2>
               <p className="mt-2 font-sans text-sm text-ink/60">
@@ -236,7 +237,7 @@ function ProfileView() {
             </div>
 
             {/* Personal details */}
-            <div className="border border-gold-light/50 bg-beige px-6 py-8 md:px-10">
+            <div className=" bg-gold-light/25 border border-gold-light/25 px-6 py-8 md:px-10">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                   <UserRound size={18} strokeWidth={1.5} className="text-gold-dark" />
@@ -387,7 +388,7 @@ function ProfileView() {
 
             {/* Documents */}
             {profile.documents.length > 0 && (
-              <div className="border border-gold-light/50 bg-beige px-6 py-8 md:px-10">
+              <div className=" bg-gold-light/25 border border-gold-light/25 px-6 py-8 md:px-10">
                 <div className="flex items-center gap-2 mb-6">
                   <ShieldCheck size={18} strokeWidth={1.5} className="text-gold-dark" />
                   <h2 className="font-serif text-xl text-ink">Documents</h2>
@@ -420,7 +421,7 @@ function ProfileView() {
 
             {/* Payment */}
             {profile.payment && (
-              <div className="border border-gold-light/50 bg-beige px-6 py-8 md:px-10">
+              <div className=" bg-gold-light/25 border border-gold-light/25 px-6 py-8 md:px-10">
                 <div className="flex items-center gap-2 mb-6">
                   <Banknote size={18} strokeWidth={1.5} className="text-gold-dark" />
                   <h2 className="font-serif text-xl text-ink">Payment</h2>

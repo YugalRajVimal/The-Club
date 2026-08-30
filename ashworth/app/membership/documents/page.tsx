@@ -28,7 +28,7 @@ function snakeToCamel(key: string) {
 }
 
 const inputClasses =
-  'w-full border border-gold-light/50 bg-ivory px-4 py-3 font-sans text-sm text-ink placeholder:text-ink/35 focus:outline-none focus:border-gold transition-colors';
+  'w-full  bg-ivory px-4 py-3 font-sans text-sm text-ink placeholder:text-ink/35 focus:outline-none focus:border-gold transition-colors';
 
 function DocumentsFlow() {
   const router = useRouter();
@@ -198,7 +198,7 @@ function DocumentsFlow() {
   }
 
   return (
-    <main className="bg-white min-h-[80vh]">
+    <main className="bg-gold-light/25 border border-gold-light/25 min-h-[80vh]">
       <div className="max-w-2xl mx-auto px-6 py-24 md:py-28">
         <div className="text-center mb-10 flex flex-col items-center">
           <FileText size={30} strokeWidth={1.25} className="text-gold-dark mb-4" />
@@ -222,7 +222,7 @@ function DocumentsFlow() {
         )}
 
         {submitted && (
-          <div className="border border-gold-light/50 bg-beige px-8 py-14 text-center flex flex-col items-center gap-4">
+          <div className=" bg-gold-light/25 border border-gold-light/25 px-8 py-14 text-center flex flex-col items-center gap-4">
             <CheckCircle2 size={36} strokeWidth={1.25} className="text-gold-dark" />
             <h2 className="font-serif text-2xl text-ink">Under Review</h2>
             <p className="font-sans text-sm text-ink/65 max-w-md">
@@ -235,7 +235,7 @@ function DocumentsFlow() {
         {requiredList && !submitted && (
           <div className="space-y-6">
             {fileItems.length > 0 && (
-              <div className="border border-gold-light/50 bg-beige px-6 py-8 md:px-10">
+              <div className=" bg-gold-light/25 border border-gold-light/25 px-6 py-8 md:px-10">
                 <h2 className="font-serif text-xl text-ink mb-6">Documents</h2>
                 <div className="space-y-6">
                   {fileItems.map((item) => {
@@ -311,7 +311,7 @@ function DocumentsFlow() {
             )}
 
             {textItems.length > 0 && (
-              <div className="border border-gold-light/50 bg-beige px-6 py-8 md:px-10">
+              <div className=" bg-gold-light/25 border border-gold-light/25 px-6 py-8 md:px-10">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="font-serif text-xl text-ink">Identity Numbers</h2>
                   {kycSaved && (

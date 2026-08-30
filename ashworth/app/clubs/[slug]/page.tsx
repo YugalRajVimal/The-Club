@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CheckCircle2, LockKeyhole } from 'lucide-react';
+import { CheckCircle2, LockKeyhole, Gem, Globe, Users, Star, Briefcase, Feather } from 'lucide-react';
 import { ApiClientError, getClubBySlug } from '@/lib/api/client';
 import { motion } from 'framer-motion';
 import Monogram from '@/components/ui/Monogram';
@@ -71,23 +71,29 @@ export default function ClubDetailPage({ params }: ClubDetailPageProps) {
     },
   ];
 
+  // Default fallback arrays for new categories if not present on club.whatWeOffer
+  const opportunities = club.whatWeOffer?.opportunities ?? [
+    'Personal introductions to a vetted network',
+    'Invitations to private events and retreats',
+    'Access to exclusive investment or travel opportunities',
+  ];
+
+  const privileges = club.whatWeOffer?.privileges ?? [
+    'Exclusive access to private lounges and venues',
+    'Priority booking for club accommodations',
+    'White-glove member services',
+  ];
+
+  const philosophy = club.whatWeOffer?.philosophy ?? [
+    'Commitment to member privacy and integrity',
+    'Upholding tradition with modern sensibilities',
+    'Fostering lasting, cross-generational relationships',
+  ];
+
   return (
     <main>
       {/* Header Hero with club.name */}
-      <section className="relative overflow-hidden bg-ivory">
-        {/* soft sepia-toned ambient background, built purely in CSS */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 50% at 50% 8%, rgba(198,168,92,0.14), transparent 60%), radial-gradient(ellipse 70% 60% at 50% 100%, rgba(227,213,184,0.4), transparent 65%)',
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 border-x border-gold-light/0 md:border-gold-light/20 max-w-6xl mx-auto"
-        />
+      <section className="relative overflow-hidden bg-gold-light/25 border border-gold-light/25">
         <div className="relative max-w-3xl mx-auto px-6 pt-28 pb-24 md:pt-36 md:pb-32 flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -160,15 +166,15 @@ export default function ClubDetailPage({ params }: ClubDetailPageProps) {
 
       {/* About the Club */}
       <section className="bg-beige py-24 md:py-28">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-7xl  mx-auto p-8 bg-gold-light/25 border border-gold-light/25 ">
           <SectionHeading eyebrow="Est. &middot; By Charter" title={`About the ${club.name}`} />
           <Reveal scale={0.98}>
-            <div className=" px-6 py-4 md:px-10">
+            <div className=" ">
               <div className="flex flex-col md:flex-row divide-y gap-6 ">
                 {blocks.map((block) => (
                   <div
                     key={block.label}
-                    className="border border-gold-light/50 bg-ivory rounded-sm flex-1 py-10 md:py-12 px-2 md:px-8 text-center flex flex-col items-center"
+                    className="border border-gold-light/50 bg-ivory rounded-xl shadow-sm flex-1 py-10 md:py-12 px-2 md:px-8 text-center flex flex-col items-center"
                   >
                     <span className="eyebrow mb-4">{block.label}</span>
                     <p className="text-sm leading-relaxed text-ink/70 font-sans max-w-[220px]">
@@ -182,23 +188,45 @@ export default function ClubDetailPage({ params }: ClubDetailPageProps) {
         </div>
       </section>
 
-      {/* What We Offer */}
-      <section className="bg-white py-20 md:py-24">
-        <div className="max-w-5xl mx-auto px-6">
+      {/* What We Offer - 6 Card Grid, 2 rows x 3 cols for large screens */}
+      <section className="bg-beige py-20 md:py-24">
+        <div className="max-w-7xl mx-auto p-8 bg-gold-light/25 border border-gold-light/25 ">
           <SectionHeading
             eyebrow="The Offering"
             title="What Do We Offer?"
             subtitle={club.whatWeOffer.purpose}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 1 col (mobile), 2 cols (md), 3 cols 2 rows (lg+) */}
+          <div
+            className="
+            grid
+            grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-3
+            gap-6
+            mt-8
+          "
+          >
+            {/* Purpose card */}
             <Reveal scale={0.98}>
-              <div className="border border-gold-light/50 bg-beige h-full px-8 py-10">
-                <h3 className="font-serif text-xl text-ink mb-6">Features</h3>
-                <ul className="space-y-4">
+              <div className="bg-white h-full px-6 py-8 rounded-xl flex flex-col items-center text-center">
+                <Gem size={28} className="mb-5 text-gold-dark" />
+                <h3 className="font-serif text-xl text-ink mb-4">Purpose</h3>
+                <p className="text-base font-sans text-ink/80 leading-relaxed">
+                  {club.whatWeOffer.purpose}
+                </p>
+              </div>
+            </Reveal>
+            {/* Features card */}
+            <Reveal delay={0.06} scale={0.98}>
+              <div className="bg-white h-full px-6 py-8 rounded-xl flex flex-col items-center text-center">
+                <Globe size={28} className="mb-5 text-gold-dark" />
+                <h3 className="font-serif text-xl text-ink mb-4">Features</h3>
+                <ul className="space-y-3 w-full text-left mx-auto max-w-xs">
                   {club.whatWeOffer.features.map((feature: string) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <span className="mt-1.5 diamond shrink-0" />
+                    <li key={feature} className="flex items-start gap-2">
+                      <span className="mt-1 diamond shrink-0" />
                       <span className="font-sans text-[15px] leading-snug text-ink/85">
                         {feature}
                       </span>
@@ -207,20 +235,72 @@ export default function ClubDetailPage({ params }: ClubDetailPageProps) {
                 </ul>
               </div>
             </Reveal>
-
-            <Reveal delay={0.1} scale={0.98}>
-              <div className="border border-gold-light/50 bg-beige h-full px-8 py-10">
-                <h3 className="font-serif text-xl text-ink mb-6">Benefits</h3>
-                <ul className="space-y-4">
+            {/* Benefits card */}
+            <Reveal delay={0.12} scale={0.98}>
+              <div className="bg-white h-full px-6 py-8 rounded-xl flex flex-col items-center text-center">
+                <CheckCircle2 size={28} className="mb-5 text-gold-dark" />
+                <h3 className="font-serif text-xl text-ink mb-4">Benefits</h3>
+                <ul className="space-y-3 w-full text-left mx-auto max-w-xs">
                   {club.whatWeOffer.benefits.map((benefit: string) => (
-                    <li key={benefit} className="flex items-start gap-3">
+                    <li key={benefit} className="flex items-start gap-2">
                       <CheckCircle2
-                        size={18}
+                        size={16}
                         strokeWidth={1.5}
                         className="text-gold-dark mt-0.5 shrink-0"
                       />
                       <span className="font-sans text-[15px] leading-snug text-ink/85">
                         {benefit}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+            {/* Opportunities card */}
+            <Reveal delay={0.18} scale={0.98}>
+              <div className="bg-white h-full px-6 py-8 rounded-xl flex flex-col items-center text-center">
+                <Users size={28} className="mb-5 text-gold-dark" />
+                <h3 className="font-serif text-xl text-ink mb-4">Opportunities</h3>
+                <ul className="space-y-3 w-full text-left mx-auto max-w-xs">
+                  {opportunities.map((opportunity: string) => (
+                    <li key={opportunity} className="flex items-start gap-2">
+                      <span className="mt-2 shrink-0 text-gold-dark">&#8226;</span>
+                      <span className="font-sans text-[15px] leading-snug text-ink/85">
+                        {opportunity}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+            {/* Privileges card */}
+            <Reveal delay={0.24} scale={0.98}>
+              <div className="bg-white h-full px-6 py-8 rounded-xl flex flex-col items-center text-center">
+                <Star size={28} className="mb-5 text-gold-dark" />
+                <h3 className="font-serif text-xl text-ink mb-4">Privileges</h3>
+                <ul className="space-y-3 w-full text-left mx-auto max-w-xs">
+                  {privileges.map((privilege: string) => (
+                    <li key={privilege} className="flex items-start gap-2">
+                      <Star size={16} className="text-gold-dark mt-1.5 shrink-0" />
+                      <span className="font-sans text-[15px] leading-snug text-ink/85">
+                        {privilege}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+            {/* Philosophy card */}
+            <Reveal delay={0.3} scale={0.98}>
+              <div className="bg-white h-full px-6 py-8 rounded-xl flex flex-col items-center text-center">
+                <Feather size={28} className="mb-5 text-gold-dark" />
+                <h3 className="font-serif text-xl text-ink mb-4">Philosophy</h3>
+                <ul className="space-y-3 w-full text-left mx-auto max-w-xs">
+                  {philosophy.map((item: string) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <Feather size={15} className="text-gold-dark mt-1.5 shrink-0" />
+                      <span className="font-sans text-[15px] leading-snug text-ink/85">
+                        {item}
                       </span>
                     </li>
                   ))}
@@ -233,9 +313,9 @@ export default function ClubDetailPage({ params }: ClubDetailPageProps) {
 
       {/* Membership Open Now / Closed */}
       <section id="membership" className="bg-beige py-20 md:py-24">
-        <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto p-8 bg-gold-light/25 border border-gold-light/25 ">
           <Reveal scale={0.98}>
-            <div className="border border-gold-light/50 bg-ivory px-8 py-14 md:px-16 text-center flex flex-col items-center">
+            <div className="border border-gold-light/50 rounded-xl shadow-sm bg-ivory px-8 py-14 md:px-16 text-center flex flex-col items-center">
               {club.membershipOpen ? (
                 <>
                   <p className="eyebrow">Membership Open Now</p>

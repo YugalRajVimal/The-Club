@@ -77,7 +77,9 @@ function JoinWizard({ club }: { club: Club }) {
   }, [step, router]);
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-24 md:py-28">
+    <div className="max-w-2xl  mx-auto px-6 py-24 md:py-28">
+      <div className="max-w-7xl mx-auto p-8 bg-gold-light/25 border border-gold-light/25 ">
+
       <div className="text-center mb-10">
         <p className="eyebrow">Joining &middot; {club.name}</p>
         <h1 className="font-serif text-3xl md:text-4xl text-ink mt-3">
@@ -86,9 +88,9 @@ function JoinWizard({ club }: { club: Club }) {
         <HairlineDivider width="56px" className="mt-6" />
       </div>
 
-      <StepIndicator step={step} />
+      {/* <StepIndicator step={step} /> */}
 
-      <div className="border border-gold-light/50 bg-beige px-6 py-10 md:px-12 md:py-12">
+      <div className="border border-gold-light/50 bg-white rounded-xl shadow-sm px-6 py-10 md:px-12 md:py-12">
         {step === 'form' && <MembershipForm />}
         {step === 'consent' && <ConsentStep />}
         {step === 'otp' && <OtpStep />}
@@ -102,6 +104,9 @@ function JoinWizard({ club }: { club: Club }) {
           </div>
         )}
       </div>
+
+      </div>
+    
     </div>
   );
 }
@@ -171,7 +176,7 @@ export default function JoinPage() {
   }
 
   return (
-    <main className="bg-white">
+    <main className="bg-beige">
       <SignupProvider>
         <JoinWizard club={club} />
       </SignupProvider>
