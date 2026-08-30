@@ -39,16 +39,19 @@ const items = [
 
 export default function Collaborations() {
   return (
-    <section className="bg-beige py-12 md:py-12">
+    <section className="bg-beige py-8 md:py-8">
        <div className="max-w-7xl  mx-auto px-6 bg-gold-light/25 border border-gold-light/25 py-16">
         <SectionHeading eyebrow="Varun Rai Kochhar Initiative" title="Collaborations & Partnerships" />
 
-        <div className="flex flex-wrap gap-6 mt-5 justify-center items-stretch">
+        {/* <Reveal scale={0.98}>
+          <div className="  ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 "> */}
+        <div className="px-6 py-6  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7  justify-center items-stretch">
           {items.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.08} y={10}>
               <div
-                className="flex flex-col items-center text-center bg-ivory border border-gold-light/40 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 px-7 py-10 flex-1"
-                style={{ flex: '1 1 275px', minWidth: 260, maxWidth: 340, height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
+                className="flex flex-col items-center text-center bg-ivory border border-gold-light/40 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 px-7 py-10 flex-1"
+                style={{ flex: '1 1 275px', minWidth: 260,  height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
               >
                 <div className="mb-5">
                   <IconFrame icon={item.icon} size="lg" />

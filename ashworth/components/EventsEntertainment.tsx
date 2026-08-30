@@ -15,8 +15,8 @@ const items = [
 
 export default function EventsEntertainment() {
   return (
-    <section className="bg-beige py-12 md:py-12">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="bg-beige py-8 md:py-8">
+      <div className="max-w-7xl  mx-auto px-6 bg-gold-light/25 border border-gold-light/25 py-16">
         <SectionHeading
           eyebrow="Varun Rai Kochhar Initiative"
           title="Events & Entertainment"
@@ -24,7 +24,7 @@ export default function EventsEntertainment() {
         />
 
         <Reveal scale={0.98}>
-          <div className="border border-gold-light/50 bg-gold-light/25 px-6 py-6  ">
+          <div className=" px-6 py-6  ">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 justify-center items-stretch">
               {items.map((item, i) => {
                 const Icon = item.icon;

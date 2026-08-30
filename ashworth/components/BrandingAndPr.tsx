@@ -50,55 +50,24 @@ const brandingItems = [
   { icon: Video, label: 'Videos, Reels And Display', description: "Creation of video content, reels, and visuals to enhance brand visibility across digital and physical platforms." },
 ];
 
-export default function Marketplace() {
+export default function BrandingAndPr() {
   return (
     <section className="bg-beige py-8 md:py-8">
       <div className="max-w-7xl  mx-auto px-6 bg-gold-light/25 border border-gold-light/25 py-16">
         <SectionHeading
-          eyebrow="For Members"
-          title="The Marketplace"
-          subtitle="A private exchange for assets and experiences, transacted with the same discretion afforded every member relationship."
+          eyebrow="In Support"
+          title="Branding &middot; Media &middot; PR"
         />
-
-        {/* Added gap-8 for proper spacing between cards and removed bg/border from grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-6 ">
-          {categories.map((cat, i) => (
-            <Reveal key={cat.name} delay={i * 0.1} scale={0.97}>
-              <div className="bg-ivory border border-gold-light/30 h-full px-6 py-10 flex flex-col items-center text-center gap-5 rounded-xl shadow-sm">
-                <IconFrame icon={cat.icon} />
-                <h3 className="font-serif text-lg text-ink">{cat.name}</h3>
-                <p className="text-sm text-ink/70 font-sans mb-2 leading-snug">{cat.description}</p>
-                <div className="flex flex-wrap justify-center gap-2 mt-1">
-                  {pills.map((pill) => (
-                    <span
-                      key={pill}
-                      className="text-[10px] tracking-wide uppercase font-sans text-gold-dark border border-gold-light/60 px-2.5 py-1"
-                    >
-                      {pill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* <div className="mt-20">
+        <div className="px-6 py-6  ">
           <Reveal scale={0.98}>
             <div className="">
-              <div className="text-center mb-10">
-                <p className="eyebrow">In Support</p>
-                <h3 className="font-serif text-2xl md:text-3xl text-ink mt-2">
-                  Branding &middot; Media &middot; PR
-                </h3>
-                <HairlineDivider width="48px" className="mt-5" />
-              </div>
+    
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
                 {brandingItems.map((item, i) => (
                   <div
                     key={item.label}
                     className="bg-white border border-gold-light/30 rounded-lg shadow-sm flex flex-col items-center text-center px-7 py-10 h-full"
-                    style={{ minHeight: 240, maxWidth: 350, margin: "0 auto" }}
+                    style={{ minHeight: 240, margin: "0 auto" }}
                   >
                     <IconFrame icon={item.icon} size="md" />
                     <h4 className="font-serif text-lg text-ink mt-4 mb-1">{item.label}</h4>
@@ -108,10 +77,10 @@ export default function Marketplace() {
               </div>
             </div>
           </Reveal>
-        </div> */}
+        </div>
    
       </div>
-
+      
     </section>
   );
 }

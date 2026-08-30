@@ -6,6 +6,7 @@ import Collaborations from '@/components/Collaborations';
 import EventsEntertainment from '@/components/EventsEntertainment';
 import Marketplace from '@/components/Marketplace';
 import Footer from '@/components/Footer';
+import BrandingAndPr from '@/components/BrandingAndPr';
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Collaborations />
       <EventsEntertainment />
       <Marketplace />
+      <BrandingAndPr />
       <Footer />
     </main>
   );

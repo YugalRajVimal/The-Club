@@ -38,7 +38,7 @@ const SOCIAL_ICONS = [Facebook, Instagram, Linkedin, Twitter, Youtube];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#e5dbc7] text-black relative">
+    <footer className="bg-[#e6ded0] text-black relative">
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-14 grid grid-cols-1 md:grid-cols-4 gap-12">
         {/* Quick Links */}
         <div>
@@ -48,7 +48,7 @@ export default function Footer() {
           <ul className="mt-6 space-y-3.5">
             {QUICK_LINKS.map((link) => (
               <li key={link}>
-                <span className="font-sans text-[13px] tracking-wide uppercase text-black/80 hover:text-gold-light transition-colors cursor-pointer">
+                <span className="font-sans text-[13px] tracking-wide uppercase text-black/80 hover:text-ink transition-colors cursor-pointer">
                   {link}
                 </span>
               </li>
@@ -60,7 +60,7 @@ export default function Footer() {
               <button
                 key={i}
                 type="button"
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-black/30 text-black/80 hover:text-gold-light hover:border-gold-light transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-black/30 text-black/80 hover:text-ink hover:border-ink transition-colors"
               >
                 <Icon size={14} strokeWidth={1.75} />
               </button>
@@ -76,7 +76,7 @@ export default function Footer() {
           <ul className="mt-6 space-y-3.5">
             {MEMBERSHIP_LINKS.map((link) => (
               <li key={link}>
-                <span className="font-sans text-[13px] tracking-wide uppercase text-black/80 hover:text-gold-light transition-colors cursor-pointer">
+                <span className="font-sans text-[13px] tracking-wide uppercase text-black/80 hover:text-ink transition-colors cursor-pointer">
                   {link}
                 </span>
               </li>
@@ -92,7 +92,7 @@ export default function Footer() {
           <ul className="mt-6 space-y-3.5">
             {PARTNERSHIP_LINKS.map((link) => (
               <li key={link}>
-                <span className="font-sans text-[13px] tracking-wide uppercase text-black/80 hover:text-gold-light transition-colors cursor-pointer">
+                <span className="font-sans text-[13px] tracking-wide uppercase text-black/80 hover:text-ink transition-colors cursor-pointer">
                   {link}
                 </span>
               </li>
@@ -169,7 +169,7 @@ export default function Footer() {
       {/* Scroll to top */}
       <button
         type="button"
-        className="absolute -top-6 right-6 w-12 h-12 rounded-full bg-gold-dark text-ivory flex items-center justify-center shadow-lg hover:bg-gold-light hover:text-black transition-colors"
+        className="absolute -top-6 right-6 w-12 h-12 rounded-full bg-gold-dark text-ivory flex items-center justify-center shadow-lg hover:bg-gold-light hover:text-ink transition-colors"
       >
         <ChevronUp size={20} strokeWidth={2} />
       </button>
