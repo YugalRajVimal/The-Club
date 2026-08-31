@@ -306,6 +306,13 @@ const googleClient = new OAuth2Client();
  
 // POST /api/auth/user/signup/start
 export const signupStart = asyncHandler(async (req: Request, res: Response) => {
+  // A logged-in user already has a clubId + membershipStatus (User is 1:1
+  // with a club in this schema) — so being authenticated here always means
+  // "already a member somewhere." Block before touching the request body.
+  if (req.userAuth) {
+    throw Errors.conflict("Membership already present. You cannot hold more than one membership.");
+  }
+ 
   const { clubId, fullName, email, phone, dob, address, occupation, password } = req.body ?? {};
  
   const missing = ["clubId", "fullName", "email", "phone", "dob", "address", "occupation", "password"].filter(
@@ -348,6 +355,10 @@ export const signupStart = asyncHandler(async (req: Request, res: Response) => {
  
 // POST /api/auth/user/signup/consent
 export const signupConsent = asyncHandler(async (req: Request, res: Response) => {
+  if (req.userAuth) {
+    throw Errors.conflict("Membership already present. You cannot hold more than one membership.");
+  }
+ 
   const { signupSessionId, consentAccepted, consentVersion, signedName, signatureImage } = req.body ?? {};
  
   if (!signupSessionId || consentAccepted !== true || !consentVersion || !signedName || !signatureImage) {
@@ -377,6 +388,10 @@ export const signupConsent = asyncHandler(async (req: Request, res: Response) =>
  
 // POST /api/auth/user/signup/otp/send
 export const signupOtpSend = asyncHandler(async (req: Request, res: Response) => {
+  if (req.userAuth) {
+    throw Errors.conflict("Membership already present. You cannot hold more than one membership.");
+  }
+ 
   const { signupSessionId } = req.body ?? {};
   if (!signupSessionId) throw Errors.validation("signupSessionId is required");
  
@@ -405,6 +420,10 @@ export const signupOtpSend = asyncHandler(async (req: Request, res: Response) =>
 // lockout counts correctly across requests, then rethrow for the error
 // handler to serialize as OTP_INVALID / OTP_EXPIRED.)
 export const signupOtpVerify = asyncHandler(async (req: Request, res: Response) => {
+  if (req.userAuth) {
+    throw Errors.conflict("Membership already present. You cannot hold more than one membership.");
+  }
+ 
   const { signupSessionId, otp } = req.body ?? {};
   if (!signupSessionId || !otp) throw Errors.validation("signupSessionId and otp are required");
  
@@ -586,27 +605,56 @@ export const userCheckAuth = asyncHandler(async (req: Request, res: Response) =>
   return sendSuccess(res, { user });
 });
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 
