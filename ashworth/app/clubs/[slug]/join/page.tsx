@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -11,51 +13,7 @@ import type { Club } from '@/lib/api/types';
 import HairlineDivider from '@/components/ui/HairlineDivider';
 import LoadingState from '@/components/ui/LoadingState';
 import MembershipForm from '@/components/join/MembershipForm';
-import ConsentStep from '@/components/join/ConsentStep';
 import OtpStep from '@/components/join/OtpStep';
-import type { SignupStep } from '@/context/SignupContext';
-
-const STEP_ORDER: Record<SignupStep, number> = {
-  form: 0,
-  consent: 1,
-  otp: 2,
-  complete: 2,
-};
-
-function StepIndicator({ step }: { step: SignupStep }) {
-  const labels = ['Membership Form', 'Agreement', 'Verification'];
-  const activeIndex = STEP_ORDER[step];
-
-  return (
-    <div className="flex items-center justify-center gap-4 mb-12">
-      {labels.map((label, i) => (
-        <div key={label} className="flex items-center gap-4">
-          <div className="flex flex-col items-center gap-2">
-            <span
-              className={`w-8 h-8 rounded-full border flex items-center justify-center font-serif text-sm ${
-                i <= activeIndex
-                  ? 'border-gold bg-gold text-ivory'
-                  : 'border-gold-light/50 text-ink/40'
-              }`}
-            >
-              {i < activeIndex ? <CheckCircle2 size={16} /> : i + 1}
-            </span>
-            <span
-              className={`font-sans text-[10px] tracking-widest2 uppercase ${
-                i <= activeIndex ? 'text-gold-dark' : 'text-ink/40'
-              }`}
-            >
-              {label}
-            </span>
-          </div>
-          {i < labels.length - 1 && (
-            <span className="w-8 sm:w-16 h-px bg-gold-light/40 mb-5" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
 
 function JoinWizard({ club }: { club: Club }) {
   const { step, beginForClub } = useSignup();
@@ -88,14 +46,20 @@ function JoinWizard({ club }: { club: Club }) {
         <HairlineDivider width="56px" className="mt-6" />
       </div>
 
-      {/* <StepIndicator step={step} /> */}
+      <div className="border border-gold-light/50 bg-white rounded-xl shadow-sm px-6 py-10 md:px-12 md:py-12 space-y-10">
+        {/* The membership form (with agreement checkbox + signature) stays
+            mounted and locks itself once submitted — the OTP step then
+            appears inline below it, on the same page. */}
+        <MembershipForm />
 
-      <div className="border border-gold-light/50 bg-white rounded-xl shadow-sm px-6 py-10 md:px-12 md:py-12">
-        {step === 'form' && <MembershipForm />}
-        {step === 'consent' && <ConsentStep />}
-        {step === 'otp' && <OtpStep />}
+        {step === 'otp' && (
+          <div className="pt-10 border-t border-gold-light/40">
+            <OtpStep />
+          </div>
+        )}
+
         {step === 'complete' && (
-          <div className="text-center flex flex-col items-center gap-4 py-4">
+          <div className="pt-10 border-t border-gold-light/40 text-center flex flex-col items-center gap-4 py-4">
             <CheckCircle2 size={36} strokeWidth={1.25} className="text-gold-dark" />
             <h2 className="font-serif text-2xl text-ink">Email Verified</h2>
             <p className="font-sans text-sm text-ink/65 max-w-md">

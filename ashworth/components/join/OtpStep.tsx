@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -24,11 +25,15 @@ export default function OtpStep() {
   const [hasSentOnce, setHasSentOnce] = useState(false);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
-  // Auto-send OTP once on mount.
+  // The combined membership-form submit already triggers the OTP send, so
+  // only send here if we land on this step without an expiry already set
+  // (e.g. this step is ever reused standalone in the future).
   useEffect(() => {
     if (hasSentOnce) return;
     setHasSentOnce(true);
-    requestOtp();
+    if (otpExpiresInSeconds === null) {
+      requestOtp();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
