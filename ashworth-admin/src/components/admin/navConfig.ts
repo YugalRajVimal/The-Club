@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { LayoutDashboard, Users, Users2, Building2, CreditCard, ShieldCheck, Settings } from "lucide-react";
+import { LayoutDashboard, Users, Users2, Building2, CreditCard, ShieldCheck, Settings, FileText } from "lucide-react";
 import type { PermissionAction, PermissionPage } from "@/types/admin";
 
 export interface NavItem {
@@ -16,6 +16,7 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Users", href: "/admin/users", icon: Users, permission: { page: "users", action: "view" } },
+  { label: "Registrations", href: "/admin/registrations", icon: FileText, permission: { page: "registrations", action: "view" } },
   { label: "Clubs", href: "/admin/clubs", icon: Building2, permission: { page: "clubs", action: "view" } },
   { label: "Payments", href: "/admin/payments", icon: CreditCard, permission: { page: "payments", action: "view" } },
   // Roles, Sub-Admins, and Settings are all super-admin-only for this app, regardless of

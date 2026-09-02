@@ -11,6 +11,16 @@ export interface PermissionMap {
     verifyDocuments: boolean;
     approveMembership: boolean;
   };
+
+  registrations: {
+    view: boolean;
+    add: boolean;
+    update: boolean;
+    delete: boolean;
+    verifyDocuments: boolean;
+    approveMembership: boolean;
+  };
+
   clubs: {
     view: boolean;
     add: boolean;
