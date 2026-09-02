@@ -502,6 +502,7 @@ import {
   UserRound,
   ChevronDown,
   ChevronRight as ChevronRightIcon,
+  Square,
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/context/AuthContext';
@@ -776,6 +777,13 @@ export default function Header() {
                 {!isLoading && isAuthenticated ? (
                   <>
                     <Link
+                      href="/dashboard"
+                      className="inline-flex items-center gap-2 font-sans text-[12px] tracking-widest2 uppercase text-ink/60 hover:text-gold-dark transition-colors"
+                    >
+                      <Square size={15} strokeWidth={1.5} />
+                      Dashboard
+                    </Link>
+                    <Link
                       href="/profile"
                       className="inline-flex items-center gap-2 font-sans text-[12px] tracking-widest2 uppercase text-ink/60 hover:text-gold-dark transition-colors"
                     >
@@ -791,27 +799,32 @@ export default function Header() {
                       Logout
                     </button>
                   </>
+             
                 ) : (
                   <>
                     <button
                       type="button"
                       className="px-5 h-10 bg-gold-dark text-ivory font-sans text-[12px] tracking-widest2 uppercase hover:bg-ink transition-colors"
+                      onClick={() => window.location.href = '/login'}
                     >
                       Job Seekers Login
                     </button>
                     <button
                       type="button"
                       className="px-5 h-10 bg-gold-dark text-ivory font-sans text-[12px] tracking-widest2 uppercase hover:bg-ink transition-colors"
+                      onClick={() => window.location.href = '/login'}
                     >
                       Employers Login
                     </button>
                     <button
                       type="button"
                       className="px-5 h-10 bg-gold-dark text-ivory font-sans text-[12px] tracking-widest2 uppercase hover:bg-ink transition-colors"
+                      onClick={() => window.location.href = '/login'}
                     >
                       Partners Login
                     </button>
                   </>
+             
                 )}
               </div>
               {/* Search box */}
