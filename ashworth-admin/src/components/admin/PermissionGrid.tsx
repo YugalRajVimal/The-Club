@@ -71,8 +71,33 @@ export function PermissionGrid({
 }
 
 export const EMPTY_PERMISSIONS: PermissionMap = {
-  users: { view: false, add: false, update: false, delete: false, verifyDocuments: false, approveMembership: false },
-  clubs: { view: false, add: false, update: false, delete: false },
-  payments: { view: false },
-  settings: { view: false, update: false },
+  users: {
+    view: false,
+    add: false,
+    update: false,
+    delete: false,
+    verifyDocuments: false,
+    approveMembership: false,
+  },
+  clubs: {
+    view: false,
+    add: false,
+    update: false,
+    delete: false,
+  },
+  payments: {
+    view: false,
+  },
+  registrations: {
+    view: false,
+    add: false,
+    update: false,
+    delete: false,
+    verifyDocuments: false,
+    approveMembership: false,
+  },
+  settings: {
+    view: false,
+    update: false,
+  },
 };
